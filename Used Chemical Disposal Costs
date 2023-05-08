@@ -1,0 +1,30 @@
+/*Create a database that contains the variety of costs associated with shipping-off used, chemical waste with columns*/
+/*including cost of the material per pound, cost of fuel for vendor pick-ups to designated disposal location, cost */
+/*of disposal of material at final chemical-processing site, chemical container rental from third-party waste handling*/
+/*and the grand total of service per chemical container pick-up performed by the third-party contractor.*/
+
+CREATE TABLE Used_Chemicals_Disposal 
+(id INTEGER PRIMARY KEY AUTOINCREMENT,
+container_id INTEGER,
+date_pickup INTEGER, 
+
+/* SEE HOW ENTER DATE
+
+/*There is a Department of Transportation federal coding. Used Material and Hazardous Waste are two different things. */
+/*Since these two classifications are not interchangeable, incorrect labeling can incur federal Environmental Protection*/
+/*Agency fines and fees, some include $86,000 per container per day for incorrect labeling of hazardous waste.*/
+
+mat'l_name TEXT,
+weight INTEGER,
+cost_perlb INTEGER,
+fuel_cost INTEGER,
+disposal_cost INTEGER,
+container_fee INTEGER,
+total_cost INTEGER);
+
+/*Add all information listed above into database named "Used Chemical Material Disposal".*/
+INSERT INTO Used_Chemicals_Disposal (1, "Used Peanut_Alternative Fuels", 
+
+
+
+;

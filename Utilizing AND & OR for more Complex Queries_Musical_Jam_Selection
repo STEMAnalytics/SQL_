@@ -1,6 +1,5 @@
 /* Create a database called Musical Jam Selection where the song data includes the artist, mood, duration of the song in seconds, and release date.*/
 
-
 CREATE TABLE Musical_Jam_Selection (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT,
@@ -30,15 +29,11 @@ INSERT INTO Musical_Jam_Selection (title, artist, mood, duration, released)
 SELECT*FROM Musical_Jam_Selection;
 
 
-
 /*Display song titles*/
-
 SELECT title FROM Musical_Jam_Selection;
 
 /*Display song titles that have a classified mood of "epic" or were released after 1900*/
-
 SELECT title FROM Musical_Jam_Selection WHERE mood = "epic" OR released > 1990;
 
 /*Display song titles where the mood is "epic", the release date was after 1990, and the duration is less than 9 minutes long.*/
-
 SELECT title FROM Musical_Jam_Selection WHERE mood = "epic" AND released > 1990 AND duration < 240;

@@ -36,5 +36,13 @@ INSERT INTO Popular_Books_Database (author, title, words)
     VALUES ("J.R.R. Tolkien", "Two Towers", 143436);
 INSERT INTO Popular_Books_Database (author, title, words)
     VALUES ("J.R.R. Tolkien", "Return of the King", 134462);
-    
+
+/*Display authors that wrote over 1,000,000 words from books listed in this database by creating a table with column names*/
+/* of "authors" and a more user friendly column name of "total_words" versus just "words"*/
 SELECT author, SUM(words) AS total_words FROM Popular_Books_Database GROUP BY author HAVING total_words > 1000000; 
+
+/*Display authors that wrote an average of 150,000 words per book listed in this database by creating a table with column names*/
+/* of "authors" and a more user friendly column named "avg_words" versus just "words" */
+SELECT author, AVG (words) AS avg_words FROM Popular_Books_Database 
+GROUP BY author 
+HAVING avg_words > 150000; 

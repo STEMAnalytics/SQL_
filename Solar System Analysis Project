@@ -53,23 +53,40 @@ INSERT INTO solar_system_objects(body,mean_radius,mean_radius_rel,volume,volume_
 /*Display all of the data in a table*/
 SELECT * FROM solar_system_objects;
 
-/*Display Solar System Objects wih all data that have a description of "round" or "unknown" shape and are classified as a "star".*/
+/*Display Solar System Objects with all data that have a description of "round" or "unknown" shape and are classified as a "star".*/
 SELECT body FROM solar_system_objects WHERE body IN (SELECT shape FROM solar_system_objects WHERE shape LIKE "round") 
-AND shape = "star";
+AND shape = "unknown";
 
 /*Count the number of objects have a density > 1.5000 g/cm^3*/
 SELECT * FROM solar_system_objects;
 SELECT COUNT (*) FROM solar_system_objects
 WHERE density > 1.5000;
 
-/*Order the results so that the objects with a density of greater than 1.5 g/cm^3 is listed in descending order from this database. */
-SELECT density FROM solar_system_objects 
-WHERE density > 1.5000
+/*Order the results so that the objects with a density of greater than 2.0 g/cm^3 is listed in descending order from this database. */
+SELECT density AS dens_bigger_2_gm3 FROM solar_system_objects 
+WHERE density > 2.0
 ORDER BY density DESC;
 
-/*Display the average density renamed to average_density of all of the objects in this database*/
+/*Count the objects that have a density greater than 2.0 g/cm^3*/
 
+SELECT SUM(density) AS dens_greater_previous_gcm
+FROM solar_system_objects
+WHERE density > 2.0;
 
+/*Display the SUM OF ALL densities in g/cm^3 of all of the objects in this database*/
+
+SELECT SUM (density) FROM solar_system_objects;
+
+/*Display the MAXIMUM density in g/cm^3 of all of the objects in this database*/
+
+SELECT MAX (density) FROM solar_system_objects;
+
+/*Display the MINIMUM density in g/cm^3 of all of the objects in this database*/
+
+SELECT MIN (density) FROM solar_system_objects;
+
+/*Display the sum of density in g/cm^3 of all of the objects in this database*/ 
+SELECT AVG (density) AS average_density FROM solar_system_objects;
 
 /*Planets are classified as having sphere-like characteristics while stars are dot-like in appearance.  Display objects that are defined as "round" within this database and ordered alphabetically.*/
 
@@ -77,7 +94,13 @@ SELECT body AS star_or_planet FROM solar_system_objects WHERE shape = "round";
 
 /*Display space objects that could be a star or planet but are listed as "unknown" or "round (extra text)"*/
 
-SELECT body AS unknown_shape_classification FROM solar_system_objects WHERE CONTAINS ="round"; 
+SELECT body FROM solar_system_objects 
+WHERE shape LIKE "%rou%"
+OR shape LIKE "%unkn%";
+
+/*Display objects that have additional round characteristics other than "round"*/
+SELECT body FROM solar_system_objects 
+WHERE shape LIKE "%(%";
 
 /*Display the mean_radius in km of all of the celestial bodies in this database plus rename column from mean_radius to average_radius. Now display the body with its renamed column of average_radius of all space bodies with a radius greater than 100 km listed in ascending order*/
 
@@ -86,3 +109,33 @@ FROM solar_system_objects
     GROUP BY body
     HAVING average_radius > 100
     ORDER BY average_radius ASC;
+    
+/*Until a comment changes, the following are examples of using the command "HAVING"*/
+    
+/*Display the average, max, and min for the data column record for mean_radius of all objects renamed to average_radius in units of kilometers or (km) relative to Earth.*/
+
+/*Display the average, max, and min for the data column record for mean_radius_rel renamed average_radius_rel_earth of all objects */
+
+
+/*Display the average, max, and min for the data column record for volume renamed to volume_10_9_km3 in units of 10^9 km^3 of all objects */
+
+
+
+/*Display the average, max, and min for the data column record for mass renamed mass_10_21_kg of all objects */
+
+/*Display the average, max, and min for the data column record for mass_rel renamed to mass_rel_Earth for all objects */
+
+
+/*Display the average, max, and min for the data column record for density renamed density_gcm3 of all objects */
+
+
+/*Display the average, max, and min for the data column record for surface_gravity renamed to surface_gravity_m/s2 of all objects */
+
+/*Display the average, max, and min for the data column record for surface_gravity renamed to surface_gravity_rel_Earth for all objects */
+
+
+
+/*Use "CASE" to display space objects containing data that does not exist.*/
+
+
+/*Dipslay proficiency of using AND, OR statements to filter data.*/

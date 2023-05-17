@@ -53,6 +53,36 @@ INSERT INTO solar_system_objects(body,mean_radius,mean_radius_rel,volume,volume_
 /*Display all of the data in a table*/
 SELECT * FROM solar_system_objects;
 
-/*Display Solar System Objects that have a description of "round" or "unknown" shape and are classified as a "star".*/
+/*Display Solar System Objects wih all data that have a description of "round" or "unknown" shape and are classified as a "star".*/
 SELECT body FROM solar_system_objects WHERE body IN (SELECT shape FROM solar_system_objects WHERE shape LIKE "round") 
 AND shape = "star";
+
+/*Count the number of objects have a density > 1.5000 g/cm^3*/
+SELECT * FROM solar_system_objects;
+SELECT COUNT (*) FROM solar_system_objects
+WHERE density > 1.5000;
+
+/*Order the results so that the objects with a density of greater than 1.5 g/cm^3 is listed in descending order from this database. */
+SELECT density FROM solar_system_objects 
+WHERE density > 1.5000
+ORDER BY density DESC;
+
+/*Display the average density renamed to average_density of all of the objects in this database*/
+
+
+
+/*Planets are classified as having sphere-like characteristics while stars are dot-like in appearance.  Display objects that are defined as "round" within this database and ordered alphabetically.*/
+
+SELECT body AS star_or_planet FROM solar_system_objects WHERE shape = "round";
+
+/*Display space objects that could be a star or planet but are listed as "unknown" or "round (extra text)"*/
+
+SELECT body AS unknown_shape_classification FROM solar_system_objects WHERE CONTAINS ="round"; 
+
+/*Display the mean_radius in km of all of the celestial bodies in this database plus rename column from mean_radius to average_radius. Now display the body with its renamed column of average_radius of all space bodies with a radius greater than 100 km listed in ascending order*/
+
+SELECT body, SUM (mean_radius) AS average_radius 
+FROM solar_system_objects
+    GROUP BY body
+    HAVING average_radius > 100
+    ORDER BY average_radius ASC;

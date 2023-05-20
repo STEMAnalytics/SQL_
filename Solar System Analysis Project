@@ -102,7 +102,7 @@ OR shape LIKE "%unkn%";
 SELECT body FROM solar_system_objects 
 WHERE shape LIKE "%(%";
 
-/*Display the mean_radius in km of all of the celestial bodies in this database plus rename column from mean_radius to average_radius. Now display the body with its renamed column of average_radius of all space bodies with a radius greater than 100 km listed in ascending order*/
+/*Display the mean_radius in km of all of the celestial bodies in this database plus rename column from mean_radius to average_radius. Now with using HAVING, display the body with its renamed column of average_radius of all space bodies with a radius greater than 100 km listed in ascending order*/
 
 SELECT body, SUM (mean_radius) AS average_radius 
 FROM solar_system_objects
@@ -110,9 +110,24 @@ FROM solar_system_objects
     HAVING average_radius > 100
     ORDER BY average_radius ASC;
     
-/*Until a comment changes, the following are examples of using the command "HAVING"*/
+/*Display objects that do not possess a shape that is round exclusively. */
     
-/*Display the average, max, and min for the data column record for mean_radius of all objects renamed to average_radius in units of kilometers or (km) relative to Earth.*/
+/*
+
+SELECT body 
+WHERE shape AS not_exclusively_round_objects WHERE not_exclusively_round_objects IN ("round");
+    
+
+/*Display the average, max, and min for the data column record for mean_radius of all objects renamed to average_radius in units of kilometers or (km) relative to Earth.  Select the */
+
+SELECT AVG (mean_radius) AS average_radius
+FROM solar_system_objects;
+
+SELECT min (mean_radius) AS minimum_radius
+FROM solar_system_objects;
+
+SELECT max (mean_radius) AS maximum_radius
+FROM solar_system_objects;
 
 /*Display the average, max, and min for the data column record for mean_radius_rel renamed average_radius_rel_earth of all objects */
 
@@ -139,3 +154,4 @@ FROM solar_system_objects
 
 
 /*Dipslay proficiency of using AND, OR statements to filter data.*/
+

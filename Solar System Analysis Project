@@ -57,6 +57,107 @@ SELECT * FROM solar_system_objects;
 SELECT body FROM solar_system_objects WHERE body IN (SELECT shape FROM solar_system_objects WHERE shape LIKE "round") 
 AND shape = "unknown";
 
+/*Planets are classified as having sphere-like characteristics while stars are dot-like in appearance.  Display objects that are defined as "round" within this database and ordered alphabetically.*/
+
+SELECT body AS star_or_planet FROM solar_system_objects WHERE shape = "round";
+
+/*Display space objects that could be a star or planet but are listed as "unknown" or "round (extra text)"*/
+
+SELECT body FROM solar_system_objects 
+WHERE shape LIKE "%rou%"
+OR shape LIKE "%unkn%";
+
+/*Display objects that have additional round characteristics other than "round"*/
+SELECT body FROM solar_system_objects 
+WHERE shape LIKE "%(%";
+
+/*Display the mean_radius in km of all of the celestial bodies in this database plus rename column from mean_radius to average_radius. Now with using HAVING, display the body with its renamed column of average_radius of all space bodies with a radius greater than 100 km listed in ascending order*/
+
+SELECT body, SUM (mean_radius) AS average_radius 
+FROM solar_system_objects
+    GROUP BY body
+    HAVING average_radius > 100
+    ORDER BY average_radius ASC;
+    
+/*Display objects that do not possess a shape that is round exclusively. */
+    
+/*
+
+SELECT body 
+WHERE shape AS not_exclusively_round_objects WHERE not_exclusively_round_objects IN ("round");
+    
+
+/*Display the average, max, and min for the data column record for mean_radius of all objects renamed to average/min/max_radius in units of kilometers or (km) relative to Earth.  */
+
+
+SELECT AVG (mean_radius) AS average_radius FROM solar_system_objects;
+
+SELECT min (mean_radius) AS minimum_radius
+FROM solar_system_objects;
+
+SELECT max (mean_radius) AS maximum_radius
+FROM solar_system_objects;
+
+
+/*Display the average, max, and min for the data column record for mean_radius_rel renamed average/min/max_radius_rel_earth of all objects */
+
+SELECT AVG (mean_radius_rel) AS average_radius_rel_earth
+FROM solar_system_objects;
+
+SELECT min (mean_radius_rel) AS minimum_radius_rel_earth
+FROM solar_system_objects;
+
+SELECT max (mean_radius_rel) AS maximum_radius_rel_earth
+FROM solar_system_objects;
+
+/*Display the average, max, and min for the data column record for volume renamed to volume_10_9_km3 in units of 10^9 km^3 of all objects */
+
+SELECT AVG (volume) AS average_volume_10_9_km3
+FROM solar_system_objects;
+
+SELECT min (volume) AS minimum_volume_10_9_km3
+FROM solar_system_objects;
+
+SELECT max (volume) AS maximum_volume_10_9_km3
+FROM solar_system_objects;
+
+/*Display the average, max, and min for the data column record for volume_rel_ renamed as average/min/max_volume_rel_earth of all objects */
+
+SELECT AVG(volume_rel) AS average_volume_rel_earth 
+FROM solar_system_objects;
+
+SELECT min (volume_rel) AS min_volume_rel_earth 
+FROM solar_system_objects;
+
+SELECT min (volume_rel) AS max_volume_rel_earth 
+FROM solar_system_objects;
+
+/*Display the average, max, and min for the data column record for mass renamed mass_10_21_kg of all objects */
+ 
+SELECT AVG (mass) AS average_mass
+FROM solar_system_objects;
+
+SELECT min (mass) AS min_mass
+FROM solar_system_objects;
+
+SELECT min (mass) AS max_mass
+FROM solar_system_objects;
+
+
+/*Display the average, max, and min for the data column record for mass_rel renamed to mass_rel_Earth for all objects */
+
+SELECT AVG (mass_rel) AS average_mass_rel_earth 
+FROM solar_system_objects;
+
+SELECT min (mass_rel) AS min_mass_rel_earth 
+FROM solar_system_objects;
+
+SELECT min (mass_rel) AS max_mass_rel_earth 
+FROM solar_system_objects;
+
+/*Display the average, max, and min for the data column record for density renamed density_gcm3 of all objects in addition to other density analysis. */
+
+
 /*Count the number of objects have a density > 1.5000 g/cm^3*/
 SELECT * FROM solar_system_objects;
 SELECT COUNT (*) FROM solar_system_objects
@@ -88,70 +189,32 @@ SELECT MIN (density) FROM solar_system_objects;
 /*Display the sum of density in g/cm^3 of all of the objects in this database*/ 
 SELECT AVG (density) AS average_density FROM solar_system_objects;
 
-/*Planets are classified as having sphere-like characteristics while stars are dot-like in appearance.  Display objects that are defined as "round" within this database and ordered alphabetically.*/
-
-SELECT body AS star_or_planet FROM solar_system_objects WHERE shape = "round";
-
-/*Display space objects that could be a star or planet but are listed as "unknown" or "round (extra text)"*/
-
-SELECT body FROM solar_system_objects 
-WHERE shape LIKE "%rou%"
-OR shape LIKE "%unkn%";
-
-/*Display objects that have additional round characteristics other than "round"*/
-SELECT body FROM solar_system_objects 
-WHERE shape LIKE "%(%";
-
-/*Display the mean_radius in km of all of the celestial bodies in this database plus rename column from mean_radius to average_radius. Now with using HAVING, display the body with its renamed column of average_radius of all space bodies with a radius greater than 100 km listed in ascending order*/
-
-SELECT body, SUM (mean_radius) AS average_radius 
-FROM solar_system_objects
-    GROUP BY body
-    HAVING average_radius > 100
-    ORDER BY average_radius ASC;
-    
-/*Display objects that do not possess a shape that is round exclusively. */
-    
-/*
-
-SELECT body 
-WHERE shape AS not_exclusively_round_objects WHERE not_exclusively_round_objects IN ("round");
-    
-
-/*Display the average, max, and min for the data column record for mean_radius of all objects renamed to average_radius in units of kilometers or (km) relative to Earth.  Select the */
-
-SELECT AVG (mean_radius) AS average_radius
-FROM solar_system_objects;
-
-SELECT min (mean_radius) AS minimum_radius
-FROM solar_system_objects;
-
-SELECT max (mean_radius) AS maximum_radius
-FROM solar_system_objects;
-
-/*Display the average, max, and min for the data column record for mean_radius_rel renamed average_radius_rel_earth of all objects */
-
-
-/*Display the average, max, and min for the data column record for volume renamed to volume_10_9_km3 in units of 10^9 km^3 of all objects */
-
-
-
-/*Display the average, max, and min for the data column record for mass renamed mass_10_21_kg of all objects */
-
-/*Display the average, max, and min for the data column record for mass_rel renamed to mass_rel_Earth for all objects */
-
-
-/*Display the average, max, and min for the data column record for density renamed density_gcm3 of all objects */
-
-
 /*Display the average, max, and min for the data column record for surface_gravity renamed to surface_gravity_m/s2 of all objects */
+
+
+SELECT AVG (surface_gravity) AS average_surface_gravity_m/s2
+FROM solar_system_objects;
+
+SELECT min (surface_gravity) AS min_surface_gravity_m/s2
+FROM solar_system_objects;
+
+SELECT min (surface_gravity) AS max_surface_gravity_m/s2
+FROM solar_system_objects;
 
 /*Display the average, max, and min for the data column record for surface_gravity renamed to surface_gravity_rel_Earth for all objects */
 
+SELECT AVG (surface_gravity_rel) AS average_surface_gravity_rel_earth
+FROM solar_system_objects;
 
+SELECT min (surface_gravity_rel) AS min_surface_gravity_rel_earth
+FROM solar_system_objects;
+
+SELECT min (surface_gravit_rel) AS max_surface_gravity_rel_earth
+FROM solar_system_objects;
 
 /*Use "CASE" to display space objects containing data that does not exist.*/
 
 
 /*Dipslay proficiency of using AND, OR statements to filter data.*/
 
+/* Put your data in here and query it! */

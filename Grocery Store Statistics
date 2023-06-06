@@ -34,3 +34,11 @@ SELECT SUM(aisle) FROM Integral_Eats;
 /*Order items that cost $2 or more dollars in ascending order.*/ 
 SELECT*FROM Integral_Eats WHERE price >=2 ORDER BY price asc;
 
+/*Create a table within the Integral_Eats Table that only displays the items within the expiration date under five dollars, with the table being renamed Edible_of_the_Eats.*/
+
+SELECT item 
+FROM Integral_Eats
+AS Edible_of_the_Eats
+WHERE expiration_date ="2023-06-06"
+AND price <5
+ORDER BY price asc;

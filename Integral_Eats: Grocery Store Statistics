@@ -1,0 +1,50 @@
+/*This grocery store database was created after completing Khan Academy, Lesson 1: SQL Basics tutorial.
+The data of this project within this database is original by me.  This created grocery store database 
+is for the store named Integral Eats.*/
+
+/*Create a table with columns of id of each item, the item itself, the aisle location of each item, the customer_rating of each item, and the expiration date of each item.*/
+CREATE TABLE Integral_Eats (id INTEGER PRIMARY KEY, item TEXT, aisle INTEGER, price INTEGER, customer_rating TEXT, expiration_date INTEGER);
+INSERT INTO Integral_Eats VALUES
+ (1, "avocados",3,7,"good", 20230605);
+INSERT INTO Integral_Eats VALUES(2, "Hummus",1,12, "Excellent", 20240523);
+INSERT INTO Integral_Eats VALUES(3, "Peaches",3,2,"Good", 20230612);
+INSERT INTO Integral_Eats VALUES(4, "Pears",3,7,"Fair", 20230721);
+INSERT INTO Integral_Eats VALUES(5, "Granny Smith Apples",3,7,"Good", 20230630);
+INSERT INTO Integral_Eats VALUES(6, "Bran muffins",3,7,"Good", 20230822);
+INSERT INTO Integral_Eats VALUES(7, "Nature’s Own Wheat Bread",10,1,"Good", 20231223);
+INSERT INTO Integral_Eats VALUES(8, "Gava",2,15,"Great",20260301);
+INSERT INTO Integral_Eats VALUES(9, "Miracle Whip",8,1,"Not great", 20281215);
+INSERT INTO Integral_Eats VALUES(10, "Milk",3,1,"Good", 20230701);
+INSERT INTO Integral_Eats VALUES(11, "Walnuts",6,11,"Great",20300101);
+INSERT INTO Integral_Eats VALUES(12, "Gouda Cheese",3,4,"Excellent", 20260104);
+INSERT INTO Integral_Eats VALUES(13, "LIFE Cereal",6,6,"Fair", 20250108);
+INSERT INTO Integral_Eats VALUES(14, "Bagels",5,2,"Great", 20240802);
+INSERT INTO Integral_Eats VALUES(15, "Cream Cheese", 1,5, "Delectable",20240115);
+
+/*List all items in store with the items, aisle, location, price listed, and customer review preference.*/ 
+
+SELECT*FROM Integral_Eats;
+
+/*Display the sum of the items per aisle.*/
+SELECT aisle, SUM(aisle) FROM Integral_Eats GROUP BY aisle;
+
+/*Display all of the items in the Integral Eats store database.*/
+SELECT SUM(aisle) FROM Integral_Eats;
+
+/*Order items that cost $2 or more dollars in ascending order.*/ 
+SELECT*FROM Integral_Eats WHERE price >=2 ORDER BY price asc;
+
+/*Create a table within the Integral_Eats Table that further analyzes the expiration dates with a new column in this table called "expiration_status" and distinguishes if the items are edible based off today's date of 2023-08-06 or tells the user to request a re-stock of that item.*/
+
+SELECT item, expiration_date,
+CASE 
+    WHEN expiration_date > 20230806 THEN     "edible"
+    ELSE "expired_request_restock"
+    END AS "expiration_status"
+    FROM Integral_Eats
+    ORDER BY expiration_date asc; 
+    
+/*This command counts the items that need to be restocked given the date of 2023-08-06 from the above command.*/
+
+SELECT COUNT (*) FROM Integral_Eats
+    WHERE expiration_date < 20230806; 

@@ -3,23 +3,23 @@ The data of this project within this database is original by me.  This created g
 is for the store named Integral Eats.*/
 
 /*Create a table with columns of id of each item, the item itself, the aisle location of each item, the customer_rating of each item, and the expiration date of each item.*/
-CREATE TABLE Integral_Eats (id INTEGER PRIMARY KEY, item TEXT, aisle INTEGER, price INTEGER, customer_rating TEXT, expiration_date INTEGER);
+CREATE TABLE Integral_Eats (id INTEGER PRIMARY KEY, item TEXT, aisle INTEGER, price INTEGER, customer_rating TEXT, expiration_date TEXT);
 INSERT INTO Integral_Eats VALUES
- (1, "avocados",3,7,"good", 20230605);
-INSERT INTO Integral_Eats VALUES(2, "Hummus",1,12, "Excellent", 20240523);
-INSERT INTO Integral_Eats VALUES(3, "Peaches",3,2,"Good", 20230612);
-INSERT INTO Integral_Eats VALUES(4, "Pears",3,7,"Fair", 20230721);
-INSERT INTO Integral_Eats VALUES(5, "Granny Smith Apples",3,7,"Good", 20230630);
-INSERT INTO Integral_Eats VALUES(6, "Bran muffins",3,7,"Good", 20230822);
-INSERT INTO Integral_Eats VALUES(7, "Nature’s Own Wheat Bread",10,1,"Good", 20231223);
-INSERT INTO Integral_Eats VALUES(8, "Gava",2,15,"Great",20260301);
-INSERT INTO Integral_Eats VALUES(9, "Miracle Whip",8,1,"Not great", 20281215);
-INSERT INTO Integral_Eats VALUES(10, "Milk",3,1,"Good", 20230701);
-INSERT INTO Integral_Eats VALUES(11, "Walnuts",6,11,"Great",20300101);
-INSERT INTO Integral_Eats VALUES(12, "Gouda Cheese",3,4,"Excellent", 20260104);
-INSERT INTO Integral_Eats VALUES(13, "LIFE Cereal",6,6,"Fair", 20250108);
-INSERT INTO Integral_Eats VALUES(14, "Bagels",5,2,"Great", 20240802);
-INSERT INTO Integral_Eats VALUES(15, "Cream Cheese", 1,5, "Delectable",20240115);
+ (1, "avocados",3,7,"good", 2023-06-05);
+INSERT INTO Integral_Eats VALUES(2, "Hummus",1,12, "Excellent", 2024-05-23);
+INSERT INTO Integral_Eats VALUES(3, "Peaches",3,2,"Good", 2023-06-12);
+INSERT INTO Integral_Eats VALUES(4, "Pears",3,7,"Fair", 2023-07-21);
+INSERT INTO Integral_Eats VALUES(5, "Granny Smith Apples",3,7,"Good", 2023-06-30);
+INSERT INTO Integral_Eats VALUES(6, "Bran muffins",3,7,"Good", 2023-08-22);
+INSERT INTO Integral_Eats VALUES(7, "Nature’s Own Wheat Bread",10,1,"Good", 2023-12-23);
+INSERT INTO Integral_Eats VALUES(8, "Gava",2,15,"Great",2026-03-01);
+INSERT INTO Integral_Eats VALUES(9, "Miracle Whip",8,1,"Not great", 2028-12-15);
+INSERT INTO Integral_Eats VALUES(10, "Milk",3,1,"Good", 2023-07-01);
+INSERT INTO Integral_Eats VALUES(11, "Walnuts",6,11,"Great",2030-01-01);
+INSERT INTO Integral_Eats VALUES(12, "Gouda Cheese",3,4,"Excellent", 2026-01-04);
+INSERT INTO Integral_Eats VALUES(13, "LIFE Cereal",6,6,"Fair", 2025-01-08);
+INSERT INTO Integral_Eats VALUES(14, "Bagels",5,2,"Great", 2024-08-02);
+INSERT INTO Integral_Eats VALUES(15, "Cream Cheese", 1,5, "Delectable",2024-01-15);
 
 /*List all items in store with the items, aisle, location, price listed, and customer review preference.*/ 
 

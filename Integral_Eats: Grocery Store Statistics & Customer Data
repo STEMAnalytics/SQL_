@@ -1,9 +1,6 @@
-/*This grocery store database was created after completing the tutorial through Khan Academy, Lesson 1: SQL Basics tutorial.
-The data of this project within this database is original by me.  This created grocery store database 
-is for the store named Integral Eats. A demonstration of JOIN with another created table is used after 
-a couple of queries specifically for Integral Eats.   */
+/*This grocery store database was created after completing the tutorial through Khan Academy, Lesson 1: SQL Basics tutorial.The data of this project within this database is original by me.  This created grocery store database is for the store named Integral Eats and contains two tables. A demonstration of JOIN with another created table is used after a couple of queries for Table 1 called Integral_Eats. Table 2 is called customer_informatics, which contains data from customers. Such information includes customer order data such as id (where the lower the number the longer the customer has joined Integral Eats, last name, first name, email address, phone number, sum of total orders per customer, the item that customer ordered, the number of said item per order, the number of re-stock requests per customer, manager complaints per customer, and each customer's amount of stock invested in Integral_Eats.*/
 
-/*Create a table with columns of id of each item, the item itself, the aisle location of each item, the customer_rating of each item, and the expiration date of each item. A key fact to not is using TEXT with the date parentheses returns the full date entered, not just the year.*/
+/*First, create a table with columns of id of each item, the item itself, the aisle location of each item, the customer_rating of each item, and the expiration date of each item. A key fact to not is using TEXT with the date parentheses returns the full date entered, not just the year.*/
 
 CREATE TABLE Integral_Eats (id INTEGER PRIMARY KEY, 
 item TEXT, 
@@ -15,7 +12,7 @@ expiration_date TEXT);
 /*Insert grocery store data into the table called Integral_Eats*/  
 
 INSERT INTO Integral_Eats VALUES
- (1, "avocadoes",3,7,"good", "2023-06-05");
+ (1, "Avocadoes",3,7,"good", "2023-06-05");
 INSERT INTO Integral_Eats VALUES(2, "Hummus",1,12, "Excellent", "2024-05-23");
 INSERT INTO Integral_Eats VALUES(3, "Peaches",3,2,"Good", "2023-06-12");
 INSERT INTO Integral_Eats VALUES(4, "Pears",3,7,"Fair", "2023-07-21");
@@ -60,7 +57,7 @@ SELECT COUNT (*) FROM Integral_Eats
     WHERE expiration_date < "2023-08-06"; 
     
     
-/*Create another table called Customer_Informatics.  This table contains customer order data such as id (insinuated from autoincrement primary key), name, email address, phone number, sum of total orders per customer, the item that customer ordered, number of re-stock requests per customer, manager compliants per customer, and the amount of stocks invested in Integral_Eats per customer.*/
+/*Create another table called customer_informatics.  This table contains customer order data such as id (where the lower the number the longer the customer has joined Integral Eats, last name, first name, email address, phone number, sum of total orders per customer, the item that customer ordered, the number of said item per order, the number of re-stock requests per customer, manager complaints per customer, and each customer's percentage of coupon use at the grocery store called Integral_Eats.*/
 
 CREATE TABLE customer_informatics (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -70,14 +67,48 @@ customer_first_name TEXT,
 customer_email TEXT,
 customer_phone TEXT,
 customer_sum_orders INTEGER,
-customer_order_item TEXT,
+item TEXT,
 customer_each_order_quantity INTEGER,
 customer_restock_requests INTEGER,
 customer_complaints INTEGER,
-customer_stock_investment REAL); 
+customer_complaints_details TEXT,
+customer_coupon_use REAL); 
 
 INSERT INTO customer_informatics 
-VALUES (1,5211, "Williams", "Samuel", "swilliams5267@gmail.com", "478-313-4211", 7, "avocadoes", 15, 8, 2, 0.02); 
+VALUES (1,5211, "Williams", "Samuel", "swilliams5267@gmail.com", "478-313-4211", 7, "Avocadoes", 15, 8, 2, "Long lines", 0.63); 
+
+INSERT INTO customer_informatics 
+VALUES (2,48, "Jones", "William", "jwilliam52@gmail.com", "828-401-5621", 25, "Hummus", 3, 1, 6, "Fair bathroom maintenance",  0.52); 
+
+INSERT INTO customer_informatics 
+VALUES (3,805, "Mathis", "Reginald", "reggie29@comsouth.net", "478-866-6601", 9, "Bagels", 31, 10, 1, "Excellent service",0.13); 
+
+INSERT INTO customer_informatics 
+VALUES (4,25, "Smith", "Barbara", "bbarb897@gmail.com", "478-918-6201", 9, "Gava", 3, 0, 0, NULL, 0.25); 
+
+INSERT INTO customer_informatics 
+VALUES (5,11, "Gonzalez", "Jose", "taconacho52@windstream.net", "478-666-3211", 7, "Walnuts", 2, 8, 3, "Line wait is annoying", 0.52); 
+
+INSERT INTO customer_informatics 
+VALUES (6,800, "Smith", "Pedro", "whyme5387@windstream.net", "478-712-6660", 12, "Milk", 15, 7, 4, "I don't like the music", 0.17); 
+
+INSERT INTO customer_informatics 
+VALUES (7,51, "Chang", "Jannette", "moremuffins57@gmail.com", "478-313-4211", 7, "Bran muffins", 15, 10, 2, "I want more coupons", 0.89); 
+
+INSERT INTO customer_informatics 
+VALUES (8,15, "Canterbery", "Margie", "mmachine62@gmail.com", "478-816-5723", 10, "Granny Smith Apples", 6, 8, 5, "Cashier too young", 0.59); 
+
+INSERT INTO customer_informatics 
+VALUES (9,35, "Williams", "Samuel", "swilliams5267@gmail.com", "478-952-7770", 7, "avocadoes", 11, 8, 8, "Why are the lines so long", 0.05); 
+
+INSERT INTO customer_informatics 
+VALUES (10,51, "Hill", "Margaret", "teapot57@gmail.com", "801-315-7845", 7, "Avocadoes", 5, 36, 1, "Excellent produce", 0.78); 
+
+INSERT INTO customer_informatics 
+VALUES (11,8021, "Hamilton", "Josh", "leonberger24@gmail.com", "776-301-8889", 7, "Nature’s Own Wheat Bread", 15, 8, 2, "I want more healthy bread", 0.56); 
+
+INSERT INTO customer_informatics 
+VALUES (12,4601, "Willingham", "Shaquira", "gospelwoman53@comsouth.net", "478-988-7853", 7, "Miracle Whip", 15, 8, 2, "I want more diet Miracle Whip options", 0.25); 
 
 SELECT*FROM customer_informatics;
 
@@ -89,10 +120,10 @@ i.customer_rating,
 c.customer_last_name, 
 c.customer_first_name, 
 c.customer_email,
-c.customer_order_item, 
+c.item, 
 c.customer_complaints,
 c.customer_complaints_details,
-c.customer_stock_investment
+c.customer_coupon_use
 FROM Integral_Eats i
 LEFT OUTER JOIN Customer_Informatics c
 ON i.id = c.customer_id; 

@@ -61,7 +61,6 @@ SELECT COUNT (*) FROM Integral_Eats
 
 CREATE TABLE customer_informatics (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
-customer_id INTEGER,
 customer_last_name TEXT,
 customer_first_name TEXT,
 customer_email TEXT,
@@ -75,55 +74,66 @@ customer_complaints_details TEXT,
 customer_coupon_use REAL); 
 
 INSERT INTO customer_informatics 
-VALUES (1,5211, "Williams", "Samuel", "swilliams5267@gmail.com", "478-313-4211", 7, "Avocadoes", 15, 8, 2, "Long lines", 0.63); 
+VALUES (1, "Williams", "Samuel", "swilliams5267@gmail.com", "478-313-4211", 7, "Avocadoes", 15, 8, 2, "Long lines", 0.63); 
 
 INSERT INTO customer_informatics 
-VALUES (2,48, "Jones", "William", "jwilliam52@gmail.com", "828-401-5621", 25, "Hummus", 3, 1, 6, "Fair bathroom maintenance",  0.52); 
+VALUES (2, "Jones", "William", "jwilliam52@gmail.com", "828-401-5621", 25, "Hummus", 3, 1, 6, "Fair bathroom maintenance",  0.52); 
 
 INSERT INTO customer_informatics 
-VALUES (3,805, "Mathis", "Reginald", "reggie29@comsouth.net", "478-866-6601", 9, "Bagels", 31, 10, 1, "Excellent service",0.13); 
+VALUES (3, "Mathis", "Reginald", "reggie29@comsouth.net", "478-866-6601", 9, "Bagels", 31, 10, 1, "Excellent service",0.13); 
 
 INSERT INTO customer_informatics 
-VALUES (4,25, "Smith", "Barbara", "bbarb897@gmail.com", "478-918-6201", 9, "Gava", 3, 0, 0, NULL, 0.25); 
+VALUES (4, "Smith", "Barbara", "bbarb897@gmail.com", "478-918-6201", 9, "Gava", 3, 0, 0, NULL, 0.25); 
 
 INSERT INTO customer_informatics 
-VALUES (5,11, "Gonzalez", "Jose", "taconacho52@windstream.net", "478-666-3211", 7, "Walnuts", 2, 8, 3, "Line wait is annoying", 0.52); 
+VALUES (5, "Gonzalez", "Jose", "taconacho52@windstream.net", "478-666-3211", 7, "Walnuts", 2, 8, 3, "Line wait is annoying", 0.52); 
 
 INSERT INTO customer_informatics 
-VALUES (6,800, "Smith", "Pedro", "whyme5387@windstream.net", "478-712-6660", 12, "Milk", 15, 7, 4, "I don't like the music", 0.17); 
+VALUES (6, "Smith", "Pedro", "whyme5387@windstream.net", "478-712-6660", 12, "Milk", 15, 7, 4, "I don't like the music", 0.17); 
 
 INSERT INTO customer_informatics 
-VALUES (7,51, "Chang", "Jannette", "moremuffins57@gmail.com", "478-313-4211", 7, "Bran muffins", 15, 10, 2, "I want more coupons", 0.89); 
+VALUES (7, "Chang", "Jannette", "moremuffins57@gmail.com", "478-313-4211", 7, "Bran muffins", 15, 10, 2, "I want more coupons", 0.89); 
 
 INSERT INTO customer_informatics 
-VALUES (8,15, "Canterbery", "Margie", "mmachine62@gmail.com", "478-816-5723", 10, "Granny Smith Apples", 6, 8, 5, "Cashier too young", 0.59); 
+VALUES (8, "Canterbery", "Margie", "mmachine62@gmail.com", "478-816-5723", 10, "Granny Smith Apples", 6, 8, 5, "Cashier too young", 0.59); 
 
 INSERT INTO customer_informatics 
-VALUES (9,35, "Williams", "Samuel", "swilliams5267@gmail.com", "478-952-7770", 7, "avocadoes", 11, 8, 8, "Why are the lines so long", 0.05); 
+VALUES (9, "Williams", "Samuel", "swilliams5267@gmail.com", "478-952-7770", 7, "Avocadoes", 11, 8, 8, "Why are the lines so long", 0.05); 
 
 INSERT INTO customer_informatics 
-VALUES (10,51, "Hill", "Margaret", "teapot57@gmail.com", "801-315-7845", 7, "Avocadoes", 5, 36, 1, "Excellent produce", 0.78); 
+VALUES (10, "Hill", "Margaret", "teapot57@gmail.com", "801-315-7845", 7, "Avocadoes", 5, 36, 1, "Excellent produce", 0.78); 
 
 INSERT INTO customer_informatics 
-VALUES (11,8021, "Hamilton", "Josh", "leonberger24@gmail.com", "776-301-8889", 7, "Nature’s Own Wheat Bread", 15, 8, 2, "I want more healthy bread", 0.56); 
+VALUES (11, "Hamilton", "Josh", "leonberger24@gmail.com", "776-301-8889", 7, "Nature’s Own Wheat Bread", 15, 8, 2, "I want more healthy bread", 0.56); 
 
 INSERT INTO customer_informatics 
-VALUES (12,4601, "Willingham", "Shaquira", "gospelwoman53@comsouth.net", "478-988-7853", 7, "Miracle Whip", 15, 8, 2, "I want more diet Miracle Whip options", 0.25); 
+VALUES (12, "Willingham", "Shaquira", "gospelwoman53@comsouth.net", "478-988-7853", 7, "Miracle Whip", 15, 8, 2, "I want more diet Miracle Whip options", 0.25); 
 
 SELECT*FROM customer_informatics;
 
 
-/*Create a table that pulls data from Table 1 that lists the item, customer rating, customer last name, customer first name, customer email, item that the customer ordered, the number of that item per customer order,  the number of customer complaints, the customer complaint details, and the percentage of customer stock investments in the Integral Eats grocery store. */
+/*Create a table that pulls data from Table 1 that lists the item, customer rating, customer last name, item that the customer ordered, the number of that item per customer order,  the number of customer complaints, the customer complaint details, and the percentage of customer's coupon use percentage. */
+
 SELECT 
 i.item, 
 i.customer_rating, 
 c.customer_last_name, 
 c.customer_first_name, 
-c.customer_email,
 c.item, 
-c.customer_complaints,
-c.customer_complaints_details,
 c.customer_coupon_use
 FROM Integral_Eats i
-LEFT OUTER JOIN Customer_Informatics c
-ON i.id = c.customer_id; 
+LEFT OUTER JOIN customer_informatics c
+ON i.item = c.item
+ORDER BY c.item desc; 
+
+/* Create a command to show the items with over 50-percent coupon use along with the customer reviews.*/
+
+SELECT 
+i.item, 
+i.customer_rating,
+c.item,
+c.customer_coupon_use
+FROM Integral_Eats i
+LEFT OUTER JOIN customer_informatics c
+ON i.item = c.item
+WHERE c.customer_coupon_use > 0.5; 

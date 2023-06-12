@@ -15,7 +15,7 @@ expiration_date TEXT);
 /*Insert grocery store data into the table called Integral_Eats*/  
 
 INSERT INTO Integral_Eats VALUES
- (1, "avocados",3,7,"good", "2023-06-05");
+ (1, "avocadoes",3,7,"good", "2023-06-05");
 INSERT INTO Integral_Eats VALUES(2, "Hummus",1,12, "Excellent", "2024-05-23");
 INSERT INTO Integral_Eats VALUES(3, "Peaches",3,2,"Good", "2023-06-12");
 INSERT INTO Integral_Eats VALUES(4, "Pears",3,7,"Fair", "2023-07-21");

@@ -60,21 +60,39 @@ SELECT COUNT (*) FROM Integral_Eats
     WHERE expiration_date < "2023-08-06"; 
     
     
-/*Create another table called Customer_Informatics.  This table contains customer order data such as id (insinuated from autoincrement primary key), name, email address, phone number, sum of total orders, number of re-stock requests per customer, manager compliants per customer, customer order data, and the amount of stocks invested in Integral_Eats per customer.*/
+/*Create another table called Customer_Informatics.  This table contains customer order data such as id (insinuated from autoincrement primary key), name, email address, phone number, sum of total orders per customer, the item that customer ordered, number of re-stock requests per customer, manager compliants per customer, and the amount of stocks invested in Integral_Eats per customer.*/
 
-CREATE TABLE Customer_Informatics (
+CREATE TABLE customer_informatics (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
 customer_id INTEGER,
 customer_last_name TEXT,
 customer_first_name TEXT,
 customer_email TEXT,
 customer_phone TEXT,
-customer_orders INTEGER,
+customer_sum_orders INTEGER,
 customer_order_item TEXT,
-customer_compliants INTEGER,
+customer_each_order_quantity INTEGER,
+customer_restock_requests INTEGER,
+customer_complaints INTEGER,
 customer_stock_investment REAL); 
 
-INSERT INTO Customer_Informatics 
-VALUES (1,5211, "Williams", "Samuel", "swilliams5267@gmail.com", "478-313-4211", 7, "avocadoes", 8, 0.02); 
+INSERT INTO customer_informatics 
+VALUES (1,5211, "Williams", "Samuel", "swilliams5267@gmail.com", "478-313-4211", 7, "avocadoes", 15, 8, 2, 0.02); 
 
-SELECT*FROM Customer_Informatics;
+SELECT*FROM customer_informatics;
+
+
+/*Create a table that pulls data from Table 1 that lists the item, customer rating, customer last name, customer first name, customer email, item that the customer ordered, the number of that item per customer order,  the number of customer complaints, the customer complaint details, and the percentage of customer stock investments in the Integral Eats grocery store. */
+SELECT 
+i.item, 
+i.customer_rating, 
+c.customer_last_name, 
+c.customer_first_name, 
+c.customer_email,
+c.customer_order_item, 
+c.customer_complaints,
+c.customer_complaints_details,
+c.customer_stock_investment
+FROM Integral_Eats i
+LEFT OUTER JOIN Customer_Informatics c
+ON i.id = c.customer_id; 

@@ -1,9 +1,19 @@
-/*This grocery store database was created after completing Khan Academy, Lesson 1: SQL Basics tutorial.
+/*This grocery store database was created after completing the tutorial through Khan Academy, Lesson 1: SQL Basics tutorial.
 The data of this project within this database is original by me.  This created grocery store database 
-is for the store named Integral Eats.*/
+is for the store named Integral Eats. A demonstration of JOIN with another created table is used after 
+a couple of queries specifically for Integral Eats.   */
 
 /*Create a table with columns of id of each item, the item itself, the aisle location of each item, the customer_rating of each item, and the expiration date of each item. A key fact to not is using TEXT with the date parentheses returns the full date entered, not just the year.*/
-CREATE TABLE Integral_Eats (id INTEGER PRIMARY KEY, item TEXT, aisle INTEGER, price INTEGER, customer_rating TEXT, expiration_date TEXT);
+
+CREATE TABLE Integral_Eats (id INTEGER PRIMARY KEY, 
+item TEXT, 
+aisle INTEGER, 
+price REAL, 
+customer_rating TEXT,
+expiration_date TEXT);
+
+/*Insert grocery store data into the table called Integral_Eats*/  
+
 INSERT INTO Integral_Eats VALUES
  (1, "avocados",3,7,"good", "2023-06-05");
 INSERT INTO Integral_Eats VALUES(2, "Hummus",1,12, "Excellent", "2024-05-23");
@@ -34,7 +44,7 @@ SELECT SUM(aisle) FROM Integral_Eats;
 /*Order items that cost $2 or more dollars in ascending order.*/ 
 SELECT*FROM Integral_Eats WHERE price >=2 ORDER BY price asc;
 
-/*Create a table within the Integral_Eats Table that further analyzes the expiration dates with a new column in this table called "expiration_status" and distinguishes if the items are edible based off today's date of 2023-08-06 or tells the user to request a re-stock of that item.*/
+/*Create a column within the Integral_Eats Table that further analyzes the expiration dates with a new column in this table called "expiration_status" and distinguishes if the items are edible based off today's date of 2023-08-06 or tells the user to request a re-stock of that item.*/
 
 SELECT item, expiration_date,
 CASE 
@@ -48,3 +58,23 @@ CASE
 
 SELECT COUNT (*) FROM Integral_Eats
     WHERE expiration_date < "2023-08-06"; 
+    
+    
+/*Create another table called Customer_Informatics.  This table contains customer order data such as id (insinuated from autoincrement primary key), name, email address, phone number, sum of total orders, number of re-stock requests per customer, manager compliants per customer, customer order data, and the amount of stocks invested in Integral_Eats per customer.*/
+
+CREATE TABLE Customer_Informatics (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+customer_id INTEGER,
+customer_last_name TEXT,
+customer_first_name TEXT,
+customer_email TEXT,
+customer_phone TEXT,
+customer_orders INTEGER,
+customer_order_item TEXT,
+customer_compliants INTEGER,
+customer_stock_investment REAL); 
+
+INSERT INTO Customer_Informatics 
+VALUES (1,5211, "Williams", "Samuel", "swilliams5267@gmail.com", "478-313-4211", 7, "avocadoes", 8, 0.02); 
+
+SELECT*FROM Customer_Informatics;

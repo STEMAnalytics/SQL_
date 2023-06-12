@@ -60,18 +60,19 @@ SELECT COUNT (*) FROM Integral_Eats
 /*Create another table called customer_informatics.  This table contains customer order data such as id (where the lower the number the longer the customer has joined Integral Eats, last name, first name, email address, phone number, sum of total orders per customer, the item that customer ordered, the number of said item per order, the number of re-stock requests per customer, manager complaints per customer, and each customer's percentage of coupon use at the grocery store called Integral_Eats.*/
 
 CREATE TABLE customer_informatics (
-customer_id INTEGER PRIMARY KEY AUTOINCREMENT,
-customer_last_name TEXT,
-customer_first_name TEXT,
-customer_email TEXT,
-customer_phone TEXT,
-customer_sum_orders INTEGER,
+id INTEGER PRIMARY KEY 
+AUTOINCREMENT,
+last_name TEXT,
+first_name TEXT,
+email TEXT,
+phone TEXT,
+sum_orders INTEGER,
 item TEXT,
 customer_each_order_quantity INTEGER,
 customer_restock_requests INTEGER,
 customer_complaints INTEGER,
 customer_complaints_details TEXT,
-customer_coupon_use REAL,
+coupon_use REAL,
 relative_id INTEGER); 
 /*Last column inserted for command #2.*/
 
@@ -116,21 +117,26 @@ SELECT*FROM customer_informatics;
 /*Display the customers that order the most items based off data in customer_informatics.*/
 
 SELECT 
-customer_last_name,
-customer_first_name, 
-customer_sum_orders AS devoted_customers
+last_name,
+first_name, 
+sum_orders AS devoted_customers
 FROM customer_informatics
-GROUP BY customer_sum_orders;
+GROUP BY sum_orders;
 
-/*Use a self-join to display the customer id and relatives of the customer with the customer_relative column.*/
+/*Use a self-join to display the customer id and name along with the email of the customer's relative in a column called relative_email column for telemarketing purposes.*/
+
+SELECT id, last_name, last_name, relative_id
+FROM customer_informatics;
+
 
 SELECT 
-customer_informatics.customer_last_name,
-customer_informatics.customer_first_name,
-relative.customer_email AS relative_email
+customer_informatics.id, 
+customer_informatics.last_name,
+customer_informatics.first_name,
+relatives.email AS relative_email
 FROM customer_informatics
-JOIN customer_informatics relative
-ON customer_informatics.relative_id=relatives.id; 
+JOIN customer_informatics relatives
+ON customer_informatics.relative_id= relatives.id; 
 
 
 /*Create a table that pulls data from Table 1 that lists the item, customer rating, customer last and first name, item that the customer ordered, the number of that item per customer order,  the number of customer complaints, the customer complaint details, and the percentage of customer's coupon use percentage. */
@@ -138,10 +144,10 @@ ON customer_informatics.relative_id=relatives.id;
 SELECT 
 i.item, 
 i.customer_rating, 
-c.customer_last_name, 
-c.customer_first_name, 
+c.last_name, 
+c.first_name, 
 c.item, 
-c.customer_coupon_use
+c.coupon_use
 FROM Integral_Eats i
 LEFT OUTER JOIN customer_informatics c
 ON i.item = c.item
@@ -151,10 +157,10 @@ ORDER BY c.item desc;
 
 SELECT 
 i.customer_rating,
-c.customer_last_name,
+c.last_name,
 c.item,
-c.customer_coupon_use
+c.coupon_use
 FROM Integral_Eats i
 JOIN customer_informatics c
 ON i.item = c.item
-WHERE c.customer_coupon_use > 0.5
+WHERE c.coupon_use > 0.5

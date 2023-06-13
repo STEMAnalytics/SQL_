@@ -11,15 +11,46 @@ spouse TEXT);
 
 INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Dolly Parton", "Nine to Five", NULL);
 
-INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Faith Hill" , "1883", 3);
+INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Faith Hill" , "1883", "Tim McGraw");
 
-INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Tim McGraw", "1883", 2);
+INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Tim McGraw", "1883", "Faith Hill");
 
-INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Kristen Steward", "Twilight", 5);
+INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Kristen Stewart", "Twilight", "Robert Pattinson");
 
-INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Robert Pattinson", "The Twilight Saga", 4);
+INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Robert Pattinson", "The Twilight Saga", "Kristen Stewart");
 
 INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Tim McGraw", "The Shack", NULL);
 
 /*Display all data in this table called Celebrities.*/
+
 SELECT*FROM celebrities;
+
+/*Create second table called Vocalists with the writer's full name, written song, place of birth, and genre.*/
+
+CREATE TABLE vocalists (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+full_name TEXT,
+song TEXT,
+release_date TEXT,
+birthplace TEXT,
+genre TEXT);
+
+/*Input data into columns of the vocalists table.*/
+
+INSERT INTO vocalists (full_name, song, release_date, birthplace, genre) 
+VALUES (1, "Jolene", "1973", "Tennessee", "Country_Bluegrass");
+
+INSERT INTO vocalists (full_name, song, release_date, birthplace, genre) 
+VALUES (1, "Nine to Five", "1980", "Tennessee", "Country_Bluegrass");
+
+INSERT INTO vocalists (full_name, song, release_date, birthplace, genre) 
+VALUES (2, "Breathe", "1999", "Mississippi", "Worship");
+
+INSERT INTO vocalists (full_name, song, release_date, birthplace, genre) 
+VALUES (3, "It's Your Love", "1987", "Louisiana", "Country");
+
+INSERT INTO vocalists (full_name, song, release_date, birthplace, genre) 
+VALUES (2, "This Kiss", "1998", "Mississippi", "Country");
+
+/*Display table called vocalists with inputted data in columns.*/
+SELECT*FROM vocalists;

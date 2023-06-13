@@ -25,11 +25,10 @@ INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Tim McGraw", "The Sh
 
 SELECT*FROM celebrities;
 
-/*Create second table called Vocalists with the writer's full name, written song, place of birth, and genre.*/
+/*Create second table called Vocalists with the writer's id, written song, place of birth, and genre.*/
 
 CREATE TABLE vocalists (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-full_name TEXT,
+person_id INTEGER PRIMARY KEY AUTOINCREMENT,
 song TEXT,
 release_date TEXT,
 birthplace TEXT,
@@ -37,20 +36,27 @@ genre TEXT);
 
 /*Input data into columns of the vocalists table.*/
 
-INSERT INTO vocalists (full_name, song, release_date, birthplace, genre) 
+INSERT INTO vocalists (person_id, song, release_date, birthplace, genre) 
 VALUES (1, "Jolene", "1973", "Tennessee", "Country_Bluegrass");
 
-INSERT INTO vocalists (full_name, song, release_date, birthplace, genre) 
+INSERT INTO vocalists (person_id, song, release_date, birthplace, genre) 
 VALUES (1, "Nine to Five", "1980", "Tennessee", "Country_Bluegrass");
 
-INSERT INTO vocalists (full_name, song, release_date, birthplace, genre) 
+INSERT INTO vocalists (person_id, song, release_date, birthplace, genre) 
 VALUES (2, "Breathe", "1999", "Mississippi", "Worship");
 
-INSERT INTO vocalists (full_name, song, release_date, birthplace, genre) 
+INSERT INTO vocalists (person_id, song, release_date, birthplace, genre) 
 VALUES (3, "It's Your Love", "1987", "Louisiana", "Country");
 
-INSERT INTO vocalists (full_name, song, release_date, birthplace, genre) 
+INSERT INTO vocalists (person_id, song, release_date, birthplace, genre) 
 VALUES (2, "This Kiss", "1998", "Mississippi", "Country");
 
 /*Display table called vocalists with inputted data in columns.*/
 SELECT*FROM vocalists;
+
+/*Use a JOIN to create another Table that artist's name, spouse, and place of birth.*/
+SELECT celebrities.full_name, vocalists.song
+    FROM celebrities c
+    JOIN vocalists v
+    ON 
+    celebrities.id = vocalists.person_id;

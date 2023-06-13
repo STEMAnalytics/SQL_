@@ -1,0 +1,25 @@
+/*Welcome to vault of Hollywood Stardom Database.  In this database, there are 3 tables: celebrities, vocalists, and writers.*/   
+
+/* Create a table about celebrities.  Columns include the movie celebrity name, the title of movies they played a role in, and the 
+id of another celebrity if married to said celebrity. */
+CREATE TABLE celebrities (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+full_name TEXT,
+movie TEXT,
+spouse TEXT);
+
+
+INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Dolly Parton", "Nine to Five", NULL);
+
+INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Faith Hill" , "1883", 3);
+
+INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Tim McGraw", "1883", 2);
+
+INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Kristen Steward", "Twilight", 5);
+
+INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Robert Pattinson", "The Twilight Saga", 4);
+
+INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Tim McGraw", "The Shack", NULL);
+
+/*Display all data in this table called Celebrities.*/
+SELECT*FROM celebrities;

@@ -32,8 +32,7 @@ vocalist_id TEXT,
 song TEXT,
 release_date TEXT,
 birthplace TEXT,
-genre TEXT, 
-full_name TEXT);
+genre TEXT);
 
 /*Input data into columns of the vocalists table.*/
 
@@ -56,8 +55,9 @@ VALUES (3, "It's Your Love", "1987", "Louisiana", "Country");
 /*Display table called vocalists with inputted data in columns.*/
 SELECT*FROM vocalists;
 
-/*Use a JOIN to create another Table that artist's name, spouse, and place of birth.*/
-SELECT c.full_name, v.full_name
+/*Use a JOIN to create another Table that shows if the celebrity is also an artist by checking if Celebrities in Table 1 are also a writer of a song in Table 2.*/
+SELECT c.full_name, v.song
     FROM celebrities c
     JOIN vocalists v
     ON c.id = v.vocalist_id;
+    

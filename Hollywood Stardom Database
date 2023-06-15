@@ -63,10 +63,6 @@ SELECT c.full_name AS celebrity_and_vocalist, v.song
     ON c.id = v.vocalist_id;
 
 
-
-
-
-   
 /*The Grand Ole Opry wants to choose from its historic icons throughout the years.  Create a JOIN that displays each vocalist's information and their published songs come from a Country/Bluegrass genre .*/    
 
 SELECT c.full_name AS celebrity_candidate_GOOpry, v.song, v.genre, v.birthplace
@@ -100,6 +96,8 @@ INSERT INTO authors (author_id, booktitle, published) VALUES (3, "Grit and Grace
 
 INSERT INTO authors (author_id, booktitle, published) VALUES (3, "Humble & Kind", "2016");
 
+SELECT*FROM authors;
+
 /*Create a table about the fictional characters in Twilight, with the three main actors are also in the Celebrities table, being Robert Pattinson and Kristen Stewart and Taylor Lautner .*/ 
 CREATE TABLE spousetwilight (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -117,7 +115,8 @@ SELECT*FROM spousetwilight;
 /*Using the celebrities T1 table and this recently added spouse_Twilight Table T3, select a JOIN to show the names of the characters and also show if which of the three are married to another in reality and in the Twilight book (take into account the marriage in real life was after the Twilight series was published).*/
 
 
-SELECT a.full_name AS spouse, b.full_name AS spouse 
+SELECT a.full_name, b.full_name 
 FROM celebrities
 JOIN celebrities a ON a.id = spousetwilight.character1_id
 JOIN celebrities b ON b.id= spousetwilight.character2_id;
+

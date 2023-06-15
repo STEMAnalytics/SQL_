@@ -108,11 +108,11 @@ id INTEGER PRIMARY KEY AUTOINCREMENT,
 character1_id INTEGER,
 character2_id INTEGER);
 
-/*Insert values into the characters_Twilight table.*/
+/*Insert values into the spouse table from the Twilight book series.*/
 
 INSERT INTO spouse (character1_id, character2_id) VALUES (2,3);
 
-/*Using the celebrities T1 table and this recently added spouse_Twilight Table T3, select a JOIN to show the names of the characters and also show if which of the three are married to another in reality and in the Twilight book (take into account the marriage in real life was after the Twilight series was published).*/
+/*Using the celebrities T1 table and this recently added spouse Table T3, select a JOIN to show the names of the characters and also show if which of the three are married to another in reality and in the Twilight book (take into account the marriage in real life was after the Twilight series was published).*/
 
 
 SELECT a.full_name, b.full_name 

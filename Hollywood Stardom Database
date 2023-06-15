@@ -99,16 +99,16 @@ INSERT INTO authors (author_id, booktitle, published) VALUES (3, "Humble & Kind"
 SELECT*FROM authors;
 
 /*Create a table about the fictional characters in Twilight, with the three main actors are also in the Celebrities table, being Robert Pattinson and Kristen Stewart and Taylor Lautner .*/ 
-CREATE TABLE spousetwilight (
+CREATE TABLE spouse (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
 character1_id INTEGER,
 character2_id INTEGER);
 
 /*Insert values into the characters_Twilight table.*/
 
-INSERT INTO spousetwilight (character1_id, character2_id) VALUES (3,4);
+INSERT INTO spouse (character1_id, character2_id) VALUES (3,4);
 
-SELECT*FROM spousetwilight;
+SELECT*FROM spouse;
 
 
 
@@ -117,6 +117,5 @@ SELECT*FROM spousetwilight;
 
 SELECT a.full_name, b.full_name 
 FROM celebrities
-JOIN celebrities a ON a.id = spousetwilight.character1_id
-JOIN celebrities b ON b.id= spousetwilight.character2_id;
-
+JOIN celebrities a ON a.id = spouse.character1_id
+JOIN celebrities b ON b.id= spouse.character2_id;

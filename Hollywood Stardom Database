@@ -21,6 +21,8 @@ INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Robert Pattinson", "
 
 INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Tim McGraw", "The Shack", NULL);
 
+INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Taylor Lautner", "Twilight", NULL); 
+
 /*Display all data in this table called Celebrities.*/
 
 SELECT*FROM celebrities;
@@ -37,8 +39,6 @@ fan_response INTEGER);
 
 /*Input data into columns of the vocalists table.*/
 
-INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
-VALUES (1, "Jolene", "1973", "Tennessee", "Country_Bluegrass", "12000000");
 
 INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
 VALUES (1, "Nine to Five", "1980", "Tennessee", "Country_Bluegrass", "38000000");
@@ -78,10 +78,46 @@ WHERE v.genre = "Country_Bluegrass";
 
 /*Now the Grand Ole Opry has new parameters of the song published date.  They want to know the number of viewers of each song when released by the artist as well as compare the oldest song releases to be the finalists.  Write a command demonstrating such.*/
 
-SELECT c.full_name AS GOOPry_finalists, 
+/*SELECT c.full_name AS GOOPry_finalists, 
 v.release_date 
 v.fan_response 
 v.song
 FROM celebrities c
 JOIN vocalists v
-ON c.id = v.vocalist_id; 
+ON c.id = v.vocalist_id;*/
+
+/*Create a third table titled Authors where the columns include the author, names of each book, and the release date of each book.*/
+
+CREATE TABLE authors (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+author_id INTEGER, 
+booktitle TEXT,
+published TEXT);
+
+INSERT INTO authors (author_id, booktitle, published) VALUES (1, "Coat of Many Colors", "1994");
+
+INSERT INTO authors (author_id, booktitle, published) VALUES (3, "Grit and Grace", "2019");
+
+INSERT INTO authors (author_id, booktitle, published) VALUES (3, "Humble & Kind", "2016");
+
+/*Create a table about the fictional characters in Twilight, with the three main actors are also in the Celebrities table, being Robert Pattinson and Kristen Stewart and Taylor Lautner .*/ 
+CREATE TABLE spousetwilight (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+character1_id INTEGER,
+character2_id INTEGER);
+
+/*Insert values into the characters_Twilight table.*/
+
+INSERT INTO spousetwilight (character1_id, character2_id) VALUES (3,4);
+
+SELECT*FROM spousetwilight;
+
+
+
+/*Using the celebrities T1 table and this recently added spouse_Twilight Table T3, select a JOIN to show the names of the characters and also show if which of the three are married to another in reality and in the Twilight book (take into account the marriage in real life was after the Twilight series was published).*/
+
+
+SELECT a.full_name AS spouse, b.full_name AS spouse 
+FROM celebrities
+JOIN celebrities a ON a.id = spousetwilight.character1_id
+JOIN celebrities b ON b.id= spousetwilight.character2_id;

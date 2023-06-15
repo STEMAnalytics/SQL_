@@ -56,8 +56,10 @@ VALUES (3, "It's Your Love", "1987", "Louisiana", "Country");
 SELECT*FROM vocalists;
 
 /*Use a JOIN to create another Table that shows if the celebrity is also an artist by checking if Celebrities in Table 1 are also a writer of a song in Table 2.*/
-SELECT c.full_name, v.song
+SELECT c.full_name AS celebrity_and_vocalist, v.song
     FROM celebrities c
     JOIN vocalists v
     ON c.id = v.vocalist_id;
+   
+/*The Grand Ole Opry wants to choose a top music artist from its historic icons throughout the years.  Create a JOIN that displays each vocalist's information IF they are married and their published songs come from a Country/Bluegrass genre .*/    
     

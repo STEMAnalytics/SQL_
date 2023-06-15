@@ -32,7 +32,7 @@ SELECT*FROM celebrities;
 CREATE TABLE vocalists (id INTEGER PRIMARY KEY AUTOINCREMENT,
 vocalist_id INTEGER,
 song TEXT,
-release_date TEXT,
+release_date INTEGER,
 birthplace TEXT,
 genre TEXT,
 fan_response INTEGER);
@@ -41,16 +41,16 @@ fan_response INTEGER);
 
 
 INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
-VALUES (1, "Nine to Five", "1980", "Tennessee", "Country_Bluegrass", "38000000");
+VALUES (1, "Nine to Five", 1980, "Tennessee", "Country_Bluegrass", "38000000");
 
 INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
-VALUES (2, "Breathe", "1999", "Mississippi", "Worship", "2000000");
+VALUES (2, "Breathe", 1999, "Mississippi", "Worship", "2000000");
 
 INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
-VALUES (2, "This Kiss", "1998", "Mississippi", "Country", "15000000");
+VALUES (2, "This Kiss", 1998, "Mississippi", "Country", "15000000");
 
 INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
-VALUES (3, "It's Your Love", "1987", "Louisiana", "Country", "20000000");
+VALUES (3, "It's Your Love", 1987, "Louisiana", "Country", "20000000");
 
 
 /*Display table called vocalists with inputted data in columns.*/
@@ -88,15 +88,19 @@ CREATE TABLE authors (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
 author_id INTEGER, 
 booktitle TEXT,
-published TEXT);
+published INTEGER);
 
-INSERT INTO authors (author_id, booktitle, published) VALUES (1, "Coat of Many Colors", "1994");
+INSERT INTO authors (author_id, booktitle, published) VALUES (1, "Coat of Many Colors", 1994);
 
-INSERT INTO authors (author_id, booktitle, published) VALUES (3, "Grit and Grace", "2019");
+INSERT INTO authors (author_id, booktitle, published) VALUES (3, "Grit and Grace", 2019);
 
-INSERT INTO authors (author_id, booktitle, published) VALUES (3, "Humble & Kind", "2016");
+INSERT INTO authors (author_id, booktitle, published) VALUES (3, "Humble & Kind", 2016);
 
-SELECT*FROM authors;
+SELECT c.full_name, a.booktitle, a.published 
+FROM celebrities c
+JOIN authors a
+ON c.id = a.author_id
+ORDER BY published ASC;
 
 /*Create a table about the fictional characters in Twilight, with the three main actors are also in the Celebrities table, being Robert Pattinson and Kristen Stewart and Taylor Lautner .*/ 
 CREATE TABLE spouse (
@@ -106,16 +110,13 @@ character2_id INTEGER);
 
 /*Insert values into the characters_Twilight table.*/
 
-INSERT INTO spouse (character1_id, character2_id) VALUES (3,4);
-
-SELECT*FROM spouse;
-
-
+INSERT INTO spouse (character1_id, character2_id) VALUES (2,3);
 
 /*Using the celebrities T1 table and this recently added spouse_Twilight Table T3, select a JOIN to show the names of the characters and also show if which of the three are married to another in reality and in the Twilight book (take into account the marriage in real life was after the Twilight series was published).*/
 
 
 SELECT a.full_name, b.full_name 
-FROM celebrities
+FROM spouse
 JOIN celebrities a ON a.id = spouse.character1_id
 JOIN celebrities b ON b.id= spouse.character2_id;
+

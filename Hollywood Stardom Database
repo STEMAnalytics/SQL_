@@ -25,31 +25,32 @@ INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Tim McGraw", "The Sh
 
 SELECT*FROM celebrities;
 
-/*Create second table called Vocalists with the writer's id, written song, place of birth, and genre.*/
+/*Create second table called Vocalists with the writer's id, written song, place of birth, and genre, and fan response to the release of the song (this last column consist of estimated numbers.*/
 
 CREATE TABLE vocalists (id INTEGER PRIMARY KEY AUTOINCREMENT,
-vocalist_id TEXT,
+vocalist_id INTEGER,
 song TEXT,
 release_date TEXT,
 birthplace TEXT,
-genre TEXT);
+genre TEXT,
+fan_response INTEGER);
 
 /*Input data into columns of the vocalists table.*/
 
-INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre) 
-VALUES (1, "Jolene", "1973", "Tennessee", "Country_Bluegrass");
+INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
+VALUES (1, "Jolene", "1973", "Tennessee", "Country_Bluegrass", "12000000");
 
-INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre) 
-VALUES (1, "Nine to Five", "1980", "Tennessee", "Country_Bluegrass");
+INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
+VALUES (1, "Nine to Five", "1980", "Tennessee", "Country_Bluegrass", "38000000");
 
-INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre) 
-VALUES (2, "Breathe", "1999", "Mississippi", "Worship");
+INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
+VALUES (2, "Breathe", "1999", "Mississippi", "Worship", "2000000");
 
-INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre) 
-VALUES (2, "This Kiss", "1998", "Mississippi", "Country");
+INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
+VALUES (2, "This Kiss", "1998", "Mississippi", "Country", "15000000");
 
-INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre) 
-VALUES (3, "It's Your Love", "1987", "Louisiana", "Country");
+INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
+VALUES (3, "It's Your Love", "1987", "Louisiana", "Country", "20000000");
 
 
 /*Display table called vocalists with inputted data in columns.*/
@@ -60,6 +61,27 @@ SELECT c.full_name AS celebrity_and_vocalist, v.song
     FROM celebrities c
     JOIN vocalists v
     ON c.id = v.vocalist_id;
+
+
+
+
+
    
-/*The Grand Ole Opry wants to choose a top music artist from its historic icons throughout the years.  Create a JOIN that displays each vocalist's information IF they are married and their published songs come from a Country/Bluegrass genre .*/    
-    
+/*The Grand Ole Opry wants to choose from its historic icons throughout the years.  Create a JOIN that displays each vocalist's information and their published songs come from a Country/Bluegrass genre .*/    
+
+SELECT c.full_name AS celebrity_candidate_GOOpry, v.song, v.genre, v.birthplace
+FROM celebrities c
+JOIN vocalists v
+ON c.id = v.vocalist_id
+WHERE v.genre = "Country_Bluegrass";
+
+
+/*Now the Grand Ole Opry has new parameters of the song published date.  They want to know the number of viewers of each song when released by the artist as well as compare the oldest song releases to be the finalists.  Write a command demonstrating such.*/
+
+SELECT c.full_name AS GOOPry_finalists, 
+v.release_date 
+v.fan_response 
+v.song
+FROM celebrities c
+JOIN vocalists v
+ON c.id = v.vocalist_id; 

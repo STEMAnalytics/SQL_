@@ -61,7 +61,7 @@ INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_r
 VALUES (3, "It's Your Love", 1987, "Louisiana", "Country", 20000000);
 
 INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
-VALUES (3, "Don't Take the Girl", 1994, "Louisiana", "Country", 500000);
+VALUES (3, "Don't Take the Girl", 1994, "Louisiana", "Country", 5010000);
 
 INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
 VALUES (3, "Shotgun Rider", 2014, "Louisiana", "Country", 400500);
@@ -80,30 +80,32 @@ SELECT c.full_name AS celebrity_and_vocalist, v.song
     ON c.id = v.vocalist_id;
 
 
-/*The Grand Ole Opry wants to choose from its historic icons throughout the years that was also in the movies. Create a JOIN that displays each vocalist's information, their published songs, using GROUP by fan_response.*/    
+/*The Grand Ole Opry wants to choose from its historic icons throughout the years that was also in the movies. Create a JOIN that displays each vocalist's information, their published songs, using GROUP by fan_response.They want to know the number of viewers of each song when released by the artist to analyze an acccurate representation of each celebrity's/vocalist's stardom.*/    
 
 SELECT c.full_name AS GOOpry_candidate, 
-v.song, v.genre, v.birthplace
+v.song,v.genre, v.birthplace
 FROM celebrities c
 JOIN vocalists v
 ON c.id = v.vocalist_id
-GROUP by GOOpry_candidate
-HAVING fan_response > 5000000 ;
+WHERE fan_response > 5000000 ;
 
 
-/*Now the Grand Ole Opry has new parameters of the song published date.  They want to know the number of viewers of each song when released by the artist to analyze an acccurate representation of each celebrity's/vocalist's stardom. Write a command demonstrating such.*/
+/*Now the Grand Ole Opry has new parameters of the song published date.   The judges want only Country genre songs to be finalists in addition to the paramater of the fan response being greater than 5000000 viewers. Write a command demonstrating such.*/
 SELECT c.full_name AS GOOpry_finalist,
-v.song, v.genre, v.fan_response
+v.song, v.genre, v.birthplace, v.fan_response
 FROM celebrities c
 JOIN vocalists v 
 ON c.id = v.vocalist_id
-WHERE v.genre = "Country" OR "Country_Bluegrass";
+WHERE v.fan_response > 5000000
+ORDER BY v.fan_response;
+
+/*Now add an additional command that ranks the finalists by viewers alone using previous commands (this line was just added to the prvious commmand. The winner is Jolene by Dolly Parton!*/
 
 
 /*Create a third table titled Authors where the columns include the author, names of each book, and the release date of each book.*/
 
 CREATE TABLE authors (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
+id INTEGER PRIMARY KEY AUTOINCREMENT, 
 author_id INTEGER,
 celebrity_id INTEGER, 
 booktitle TEXT,
@@ -115,13 +117,20 @@ INSERT INTO authors (author_id, booktitle, published) VALUES (3, "Grit and Grace
 
 INSERT INTO authors (author_id, booktitle, published) VALUES (3, "Humble & Kind", 2016);
 
+/*Display the authors, book title, and publishing date from the authors table.*/
+SELECT*FROM authors;
+
+/*Create a JOIN showing the authors table (T3) that are also celebrities from T1.*/
+
 SELECT c.full_name, a.booktitle, a.published 
 FROM celebrities c
 JOIN authors a
 ON c.id = a.author_id
 ORDER BY published ASC;
 
-/*Create a table about the fictional characters in Twilight, with the three main actors are also in the Celebrities table, being Robert Pattinson and Kristen Stewart and Taylor Lautner .*/ 
+/*Create a table about the authors, that are celebrities and may also be a spouse to another celebrity. */
+
+
 CREATE TABLE spouse (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
 character1_id INTEGER,
@@ -131,4 +140,14 @@ character2_id INTEGER);
 
 INSERT INTO spouse (character1_id, character2_id) VALUES (2,3);
 
-/*Using the celebrities T1 table and this recently added spouse Table T3, select a JOIN to show the names of the characters and also show if which of the three are married to another in reality and in the Twilight book (take into account the marriage in real life was after the Twilight series was published).*/
+/*Using the celebrities T1 table and this recently added spouse Table T3, select a JOIN to show the names of the characters and also show if which of the three are married to another in reality and in the Twilight book (take into account the marriage in real life was after the Twilight series was published. Show authors that are celebrities to other celebrities that are also spouses and authors as well. */ 
+SELECT a.full_name, b.full_name AS spouse_full_name
+FROM spouse
+JOIN celebrities a ON a.id = spouse.character1_id
+JOIN celebrities b ON b.id= spouse.character2_id;
+
+/*Now create a table about books, the author, main characters, and other books that these characters show up in. There are fictional characters in Twilight, with the three main actors are also in the Celebrities table, being Robert Pattinson and Kristen Stewart and Taylor Lautner .
+
+
+CREATE TABLE fictional_characters (
+id INTEGER PRIMARY KEY AUTOINCREMENT,   .*/

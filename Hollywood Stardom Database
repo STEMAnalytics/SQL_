@@ -1,33 +1,35 @@
 /*Welcome to vault of Hollywood Stardom Database.  In this database, there are 3 tables: celebrities, vocalists, and writers.*/   
 
-/* Create a table about celebrities.  Columns include the movie celebrity name, the title of movies they played a role in, and the 
+/* Create a table about celebrities starring in movies.  Columns include the movie celebrity name, the title of movies they played a role in, and the 
 id of another celebrity if married to said celebrity. */
 CREATE TABLE celebrities (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
 full_name TEXT,
 movie TEXT,
-spouse TEXT);
+starred_spouse TEXT);
 
 
-INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Dolly Parton", "Nine to Five", NULL);
+INSERT INTO celebrities (full_name, movie, starred_spouse) VALUES ("Dolly Parton", "Nine to Five", NULL);
 
-INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Faith Hill" , "1883", "Tim McGraw");
+INSERT INTO celebrities (full_name, movie, starred_spouse) VALUES ("Faith Hill" , "1883", "Tim McGraw");
 
-INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Tim McGraw", "1883", "Faith Hill");
+INSERT INTO celebrities (full_name, movie, starred_spouse) VALUES ("Tim McGraw", "1883", "Faith Hill");
 
-INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Kristen Stewart", "Twilight", "Robert Pattinson");
+INSERT INTO celebrities (full_name, movie, starred_spouse) VALUES ("Kristen Stewart", "Twilight", "Robert Pattinson");
 
-INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Robert Pattinson", "The Twilight Saga", "Kristen Stewart");
+INSERT INTO celebrities (full_name, movie, starred_spouse) VALUES ("Robert Pattinson", "The Twilight Saga", "Kristen Stewart");
 
-INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Tim McGraw", "The Shack", NULL);
+INSERT INTO celebrities (full_name, movie, starred_spouse) VALUES ("Tim McGraw", "The Shack", NULL);
 
-INSERT INTO celebrities (full_name, movie, spouse) VALUES ("Taylor Lautner", "Twilight", NULL); 
+INSERT INTO celebrities (full_name, movie, starred_spouse) VALUES ("Taylor Lautner", "Twilight", NULL); 
+
+
 
 /*Display all data in this table called Celebrities.*/
 
 SELECT*FROM celebrities;
 
-/*Create second table called Vocalists with the writer's id, written song, place of birth, and genre, and fan response to the release of the song (this last column consist of estimated numbers.*/
+/*Create second table called Vocalists with the writer's id, written song, place of birth, genre, and fan response to the release of the song (this last column consist of estimated numbers, not accurate, but an integer based on overall Vocalist stardom.*/
 
 CREATE TABLE vocalists (id INTEGER PRIMARY KEY AUTOINCREMENT,
 vocalist_id INTEGER,
@@ -41,52 +43,69 @@ fan_response INTEGER);
 
 
 INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
-VALUES (1, "Nine to Five", 1980, "Tennessee", "Country_Bluegrass", "38000000");
+VALUES (1, "Nine to Five", 1980, "Tennessee", "Country_Bluegrass", 38000000);
 
 INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
-VALUES (2, "Breathe", 1999, "Mississippi", "Worship", "2000000");
+VALUES (1, "I Will Always Love You", 1974, "Tennessee", "Country_Bluegrass", 14000000);
 
 INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
-VALUES (2, "This Kiss", 1998, "Mississippi", "Country", "15000000");
+VALUES (1, "Jolene", 1974, "Tennessee", "Country_Bluegrass", 50000000);
 
 INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
-VALUES (3, "It's Your Love", 1987, "Louisiana", "Country", "20000000");
+VALUES (2, "Breathe", 1999, "Mississippi", "Worship", 2000000);
+
+INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
+VALUES (2, "This Kiss", 1998, "Mississippi", "Country", 15000000);
+
+INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
+VALUES (3, "It's Your Love", 1987, "Louisiana", "Country", 20000000);
+
+INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
+VALUES (3, "Don't Take the Girl", 1994, "Louisiana", "Country", 500000);
+
+INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
+VALUES (3, "Shotgun Rider", 2014, "Louisiana", "Country", 400500);
+
+INSERT INTO vocalists (vocalist_id, song, release_date, birthplace, genre, fan_response) 
+VALUES (3, "I Like It, I Love It",1995, "Louisiana", "Country", 750000);
 
 
 /*Display table called vocalists with inputted data in columns.*/
 SELECT*FROM vocalists;
 
-/*Use a JOIN to create another Table that shows if the celebrity is also an artist by checking if Celebrities in Table 1 are also a writer of a song in Table 2.*/
+/*Use a JOIN to create another Table that shows if the celebrity is also an artist/vocalist by checking if Celebrities in Table 1 are also a writer of a song/Vocalists within Table 2 .*/
 SELECT c.full_name AS celebrity_and_vocalist, v.song
     FROM celebrities c
     JOIN vocalists v
     ON c.id = v.vocalist_id;
 
 
-/*The Grand Ole Opry wants to choose from its historic icons throughout the years.  Create a JOIN that displays each vocalist's information and their published songs come from a Country/Bluegrass genre .*/    
+/*The Grand Ole Opry wants to choose from its historic icons throughout the years that was also in the movies. Create a JOIN that displays each vocalist's information, their published songs, using GROUP by fan_response.*/    
 
-SELECT c.full_name AS celebrity_candidate_GOOpry, v.song, v.genre, v.birthplace
+SELECT c.full_name AS GOOpry_candidate, 
+v.song, v.genre, v.birthplace
 FROM celebrities c
 JOIN vocalists v
 ON c.id = v.vocalist_id
-WHERE v.genre = "Country_Bluegrass";
+GROUP by GOOpry_candidate
+HAVING fan_response > 5000000 ;
 
 
-/*Now the Grand Ole Opry has new parameters of the song published date.  They want to know the number of viewers of each song when released by the artist as well as compare the oldest song releases to be the finalists.  Write a command demonstrating such.*/
-
-/*SELECT c.full_name AS GOOPry_finalists, 
-v.release_date 
-v.fan_response 
-v.song
+/*Now the Grand Ole Opry has new parameters of the song published date.  They want to know the number of viewers of each song when released by the artist to analyze an acccurate representation of each celebrity's/vocalist's stardom. Write a command demonstrating such.*/
+SELECT c.full_name AS GOOpry_finalist,
+v.song, v.genre, v.fan_response
 FROM celebrities c
-JOIN vocalists v
-ON c.id = v.vocalist_id;*/
+JOIN vocalists v 
+ON c.id = v.vocalist_id
+WHERE v.genre = "Country" OR "Country_Bluegrass";
+
 
 /*Create a third table titled Authors where the columns include the author, names of each book, and the release date of each book.*/
 
 CREATE TABLE authors (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
-author_id INTEGER, 
+author_id INTEGER,
+celebrity_id INTEGER, 
 booktitle TEXT,
 published INTEGER);
 
@@ -113,10 +132,3 @@ character2_id INTEGER);
 INSERT INTO spouse (character1_id, character2_id) VALUES (2,3);
 
 /*Using the celebrities T1 table and this recently added spouse Table T3, select a JOIN to show the names of the characters and also show if which of the three are married to another in reality and in the Twilight book (take into account the marriage in real life was after the Twilight series was published).*/
-
-
-SELECT a.full_name, b.full_name 
-FROM spouse
-JOIN celebrities a ON a.id = spouse.character1_id
-JOIN celebrities b ON b.id= spouse.character2_id;
-

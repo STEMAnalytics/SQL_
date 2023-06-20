@@ -140,14 +140,39 @@ character2_id INTEGER);
 
 INSERT INTO spouse (character1_id, character2_id) VALUES (2,3);
 
-/*Using the celebrities T1 table and this recently added spouse Table T3, select a JOIN to show the names of the characters and also show if which of the three are married to another in reality and in the Twilight book (take into account the marriage in real life was after the Twilight series was published. Show authors that are celebrities to other celebrities that are also spouses and authors as well. */ 
+/*Using the celebrities T1 table and this recently added spouse Table T4, select a JOIN to show the names of the characters and also show if which of the three are married to another in reality and in the Twilight book (take into account the marriage in real life was after the Twilight series was published. Show authors that are celebrities to other celebrities that are also spouses and authors as well. */ 
 SELECT a.full_name, b.full_name AS spouse_full_name
 FROM spouse
 JOIN celebrities a ON a.id = spouse.character1_id
 JOIN celebrities b ON b.id= spouse.character2_id;
 
-/*Now create a table about books, the author, main characters, and other books that these characters show up in. There are fictional characters in Twilight, with the three main actors are also in the Celebrities table, being Robert Pattinson and Kristen Stewart and Taylor Lautner .
+/*Now create a table about the books, the author, main characters, and other books that these characters show up in. There are fictional characters in Twilight, where some artists are also in the movies, with the three main actors are also in the Celebrities table, being Robert Pattinson and Kristen Stewart and Taylor Lautner .
+. Coat of Many Colors is an autobiography, so not in this table with other books mentioned previously being a mixture of autobiographical or self-help books.*/
 
 
-CREATE TABLE fictional_characters  (
-id INTEGER PRIMARY KEY AUTOINCREMENT,   .*/
+CREATE TABLE fictional  (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+fictional_book TEXT,
+character_name TEXT,
+actor_id INTEGER,
+significant_id INTEGER,
+significant_status TEXT);
+
+INSERT INTO fictional (fictional_book, character_name,actor_id, significant_id, significant_status) VALUES ("Twilight", "Bella Swan", 4, 5, "Husband");
+
+INSERT INTO fictional (fictional_book, character_name, actor_id, significant_id, significant_status) VALUES  ("Twilight", "Edward Cullen", 5, 4, "Wife");
+
+INSERT INTO fictional (fictional_book, character_name,actor_id, significant_id, significant_status) VALUES ("Twilight", "Jacob Black", 4, 7, "Previous Boyfriend");
+
+SELECT*FROM fictional;
+
+/*Combine the data from T1, showing the fictional character relationships in addition to the celebrities.This shows the fictional interrelationships and also what the real life relationships are.*/
+
+SELECT 
+c.full_name AS actor_name, 
+c.starred_spouse AS reality_spouse,
+f.character_name, 
+f.significant_status AS book_relationship
+FROM celebrities c
+JOIN fictional f
+ON c.id = f.actor_id AND f.significant_id; 

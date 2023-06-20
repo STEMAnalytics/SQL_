@@ -149,5 +149,5 @@ JOIN celebrities b ON b.id= spouse.character2_id;
 /*Now create a table about books, the author, main characters, and other books that these characters show up in. There are fictional characters in Twilight, with the three main actors are also in the Celebrities table, being Robert Pattinson and Kristen Stewart and Taylor Lautner .
 
 
-CREATE TABLE fictional_characters (
+CREATE TABLE fictional_characters  (
 id INTEGER PRIMARY KEY AUTOINCREMENT,   .*/

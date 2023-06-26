@@ -89,7 +89,8 @@ FROM "netflix_titles_info"
 ORDER BY title asc;
 
 #5.  According to a recent survey, TV shows are watched more than movies by Netflix subscribers due to less time per 
-#    episode versus the time investment of a full movie.   Write a query that alphabetically lists all TV shows
+#    episode versus the time investment of a full movie.   There are more TV Shows than movies provided by Netflix
+#    which is evidenced by command # 1 and #2 .  Write a query that alphabetically lists all TV shows
 #    provided by Netflix.
 
 SELECT title

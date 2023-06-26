@@ -80,17 +80,18 @@ FROM "netflix_titles_info"
 WHERE type = 'TV Show'; 
 
 #3. According to this database, what was the date that Netflix added the most recent Movies and/or TV shows?   
-SELECT MAX date (date (date_added))
+SELECT MAX (date (date_added))
 FROM "netflix_titles_info";
 
-#4.  In alphabetical order, write a command that lists all of the TV shows and movies in this Netflix Database. 
+#4.  Interestingly the last TV Show or movie added by Netflix was in late 2021. 
+#    In alphabetical order, write a command that lists all of the TV shows and movies in this Netflix Database. 
 SELECT title
 FROM "netflix_titles_info"
 ORDER BY title asc;
 
 #5.  According to a recent survey, TV shows are watched more than movies by Netflix subscribers due to less time per 
-#    episode versus the time investment of a full movie.   There are more TV Shows than movies provided by Netflix
-#    which is evidenced by command # 1 and #2 .  Write a query that alphabetically lists all TV shows
+#    episode versus the time investment of a full movie.   There are more TV Shows than movies provided by Netflix,
+#    which is evidenced by command # 1 and #2 .  Write a query that alphabetically lists just all of TV shows
 #    provided by Netflix.
 
 SELECT title
@@ -106,9 +107,11 @@ director
 FROM "netflix_titles_info" titles
 LEFT JOIN "netflix_people" people
 ON titles.show_id=people.show_id
-where titles.title='The Starling'
+where titles.title='The Starling';
 
-#7. Within this database, display the oldest movie in addition to it's created year (release_year).
+#   The director's name of the movie "The Starling" is Theodore Melfi! 
+
+#7. Within this database, display the oldest movie in addition to its created year (release_year).
 
 SELECT title
 , release_year
@@ -120,17 +123,17 @@ LIMIT 1;
 
 #8. Now, this command assumes that there was only one movie created in the year previously listed.   
 #   Write a command that is a subquery, where the command searches for other movies with release dates
-#   also within the year previously listed.
+#   other than the Sankofa movie also within the year 1993.
 
 SELECT title
 ,release_year
 FROM "netflix_titles_info"
-WHERE type = 'Movie'
+WHERE type = 'Movie';
 
 AND release_year <=
 (SELECT MIN (release_year)
 FROM "netflix_titles_info"
 WHERE type = 'Movie');
 
-# Since there was no other movie released in the same year, there is not another oldest movie.
+# Since there was no other movie released in the same year, there is not another oldest movie besides Sankofa.
 # However, this is a good practice to check regardless.  

@@ -380,4 +380,4 @@ FROM BIT_DB.FebSales
 WHERE location LIKE '%Los Angeles%'
 GROUP BY Product 
 
-/*It appears that the most purchased items in Los Angeles were triple A batteries! */
+/*It appears that the most purchased February items in Los Angeles were triple A batteries! */

@@ -6,13 +6,11 @@ FebSales
 JanSales
 MarSales
 MaySales
-This datbase contains a table called "customers" in addition to other table that may contain sales data by month. Unless noted otherwise,
-query commands (not the notes and explanations) were given to use by the Break Into Tech Data Analytics Certificate Program with Charlotte by Charlotte Chaze, 
-Chapter 1.7 and 1.8 SQLite Studio. */
+This datbase contains a table called "customers" in addition to other table that may contain sales data by month. */
 
 /* Utlize the SELECT command to display only 25 rows that are in the "customers" table in addition to displaying the names of all of the column names
 within the "customers" table. Run QL in SQLite studio.*/
-SELECT * FROM BIT_DB.customers LIMIT 25 
+SELECT * FROM BIT_DB.customers LIMIT 25
 
 /* A BETTER CODE!!!
 Correcting inaccurate data. In the table "customers", sift out rows with the data consisting of "Order ID" versus just a number that is
@@ -24,31 +22,31 @@ The command below with the length command filters out cells not containing the d
 
 SELECT * FROM BIT_DB.customers
 WHERE length (order_id)=6
-AND order_id <> 'Order ID'
+AND order_id <> 'Order ID'; 
 
 
 /*Another way to fill out jumbled code is in the query below. This command filter does not display a table's cells that are empty with 
-the placeholder string displayed as "NULL". */
+the placeholder string displayed as "NULL".  */
 SELECT * FROM BIT_DB.customers
 WHERE order_id <> IS NOT NULL
-AND order_id <> ''
+AND order_id <> ''; 
 
 /*DOUBLE CLICKING on the column names with the display of "..." tells the user that there are more values than are currently displayed. This could be an issue if the 
 company using this database is bought by another company that would not sort their client database in the same command style.. By double clicking the column name
 order_id again, the column values changes all of the data to "Order ID". Use a command that will filter out unorganized data.*/
-SELECT * FROM BIT_DB.customers
+SELECT * FROM BIT_DB.customers;
 
 /*The column names in the "customers" table are "order_id" and "acctnum" or account number. */
 
 /* The account numbers are 8 digits long. This is a very large table within an even larger database! 
 Write another query counting the total account numbers within this "customers" database. */
-SELECT COUNT (*) FROM BIT_DB.customers
+SELECT COUNT (*) FROM BIT_DB.customers;
 
 /*There are 21,759 customers within this table with the idenfication of "acctnum".*/
 
 
 /*Now let us explore the other tables within the database!*/
-SELECT * FROM BIT_DB.JanSales LIMIT 25
+SELECT * FROM BIT_DB.JanSales LIMIT 25;
 
 /*The JanSales table contains the columns orderID, Product, Quantity, price, orderdate, and location.*/
 
@@ -64,7 +62,7 @@ orderID of each order in the “JanSales” table. The length fuction is an SQL 
 cells not containing the data characters of 'Order ID'.*/
 SELECT COUNT (orderID) FROM BIT_DB.JanSales
 WHERE length (orderID)=6
-AND orderID <> 'Order ID'
+AND orderID <> 'Order ID'; 
 
 /*There are a total of 9,681 orders within the "JanSales" table.*/
 
@@ -72,7 +70,7 @@ AND orderID <> 'Order ID'
 SELECT distinct Product, price
 FROM BIT_DB.JanSales
 WHERE price 
-IN( SELECT min(price) FROM BIT_DB.JanSales)
+    IN( SELECT min(price) FROM BIT_DB.JanSales)
 /*So AAA batteries were the cheapest item ordered in January. But a better code would 
 account for a possible second item at the same price sold in January!!!*/
 
@@ -81,28 +79,29 @@ spice of life when correct!*/
 
 SELECT distinct Product, price
 FROM BIT_DB.JanSales
-ORDER BY price ASC LIMIT 1
+ORDER BY price ASC LIMIT 1;
 
 SELECT distinct 
 Product, MIN (price)
 FROM BIT_DB.JanSales Jan
 GROUP BY Product, price
-ORDER BY price ASC LIMIT 1
+ORDER BY price ASC LIMIT 1;
 
 /*Most Relational Database Management Systems do not allow
-for aggregrate and non-aggregate functions without 
-GROUP BY commands. The reasoning behind this is that 
-the system does not know if the user wants the mininum
-price of all products or per each product. Even though the 
-same results are rendered in SQLite without the GROUP BY 
-clause, for continuity's sake, the GROUP BY command is 
-shown in the commands. In addition, the lowest price per item
-is listed even if each item was sold at multiple prices; therefore,
-it is not the only price per given product.
-The code is included below. */
+ for aggregrate and non-aggregate  functions without 
+ GROUP BY commands.  The reasoning behind this is that 
+ the system does not know if the user wants the mininum
+ price of all products or per each product.  Even though the 
+ same results are rendered in SQLite without the GROUP BY 
+ clause, for continuity's sake, the GROUP BY command is 
+ shown in the commands. In addition, the lowest price per item
+ is listed even if each item was sold at multiple prices; therefore,
+ it is not the only price per given product.
+ The code is included below.  */
+ 
 SELECT distinct product, min(price)
 FROM BIT_DB.JanSales
-GROUP BY product
+GROUP BY product;
 
 
 /*This GROUP BY clause tells the Relational Database Management system that we 
@@ -118,27 +117,27 @@ month of January.*/
 
 SELECT sum(quantity) * price
 AS revenue_accumulated,
-product
+Product
 FROM BIT_DB.JanSales
-GROUP BY product
+GROUP BY product;
 
-/*Analyze "(quantity)*price" .*/
+/*Analyze  "(quantity)*price" .*/
 SELECT orderID
 , quantity 
 , price
 ,product
-FROM BIT_DB.JanSales
+FROM BIT_DB.JanSales;
 
-/*Notice that the quantity of each item is sometimes greater than one. This is 
+/*Notice that the quantity of each item is sometimes greater than one.  This is 
 because there are duplicates since different orders consisted of the same 
-product. Let us clean this up a bit! */
+product.   Let us clean this up a bit! */
 SELECT SUM (quantity)
 , price
 , product
 FROM BIT_DB.JanSales
-GROUP BY product, price
+GROUP BY product, price;
 
-/*Let us make this more specific! The sales manager wants to know the revenue per 
+/*Let us make this more specific!  The sales manager wants to know the revenue per 
 product, which is calculated by multiplying a product's price times the quantity 
 that the item was purchased.*/
 
@@ -146,7 +145,7 @@ that the item was purchased.*/
 SELECT SUM (quantity) * price AS revenue_accumulated
 , Product
 FROM BIT_DB.JanSales
-GROUP BY product
+GROUP BY product;
 
 
 /*But, to clarify, here are the total sales from the month of January from
@@ -154,7 +153,7 @@ the "JanSales" table.*/
 
 SELECT SUM (price) 
 AS total_JanSales
-FROM BIT_DB.JanSales
+FROM BIT_DB.JanSales;
 
 /*January sales totalled to $1,805,013.66 !*/
 
@@ -166,7 +165,7 @@ SELECT sum(quantity) * price
 AS revenue_accumulated,
 Product
 FROM BIT_DB.FebSales
-GROUP BY product
+GROUP BY product;
 
 /*But, to clarify, here are the total sales from the month of February from
 the "FebSales" table.*/
@@ -174,7 +173,7 @@ the "FebSales" table.*/
 
 SELECT SUM (price) 
 AS total_FebSales
-FROM BIT_DB.FebSales
+FROM BIT_DB.FebSales;
 
 
 /* Total sales for the month of February are $2,190,339.70.*/
@@ -192,7 +191,7 @@ FROM BIT_DB.FebSales
 WHERE location = '548 Lincoln St, Seattle, WA 98101'
 AND length (orderID)=6
 AND orderID <> 'Order ID'
-GROUP BY product
+GROUP BY product;
 
 /*From items purchased in February, which were purchased at "548 Lincoln St, Seattle, 
 Washington 98101", the quantity purchased, in addition to the total sale . This is the
@@ -208,7 +207,7 @@ FROM BIT_DB.FebSales
 WHERE location = '548 Lincoln St, Seattle, WA 98101'
 AND length (orderID)=6
 AND orderID <> 'Order ID'
-GROUP BY product
+GROUP BY product;
 
 /*The CEO purchases only the essentials from this company - AA batteries!*/
 
@@ -219,7 +218,7 @@ SELECT COUNT (orderID)
 FROM BIT_DB.JanSales
 WHERE Product = 'iPhone'
 AND length (orderID)= 6
-AND orderID <> 'Order ID'
+AND orderID <> 'Order ID'; 
 
 /*So, in January, 379 iPhones were ordered. What about February, March, April, and May for the 
 number of iPhones ordered.*/
@@ -228,7 +227,7 @@ SELECT COUNT (orderID)
 FROM BIT_DB.FebSales
 WHERE Product = 'iPhone'
 AND length (orderID)= 6
-AND orderID <> 'Order ID'
+AND orderID <> 'Order ID'; 
 /*439 iPhones were ordered in February.*/
 
 
@@ -237,7 +236,7 @@ SELECT COUNT (orderID)
 FROM BIT_DB.MarSales
 WHERE Product = 'iPhone'
 AND length (orderID)= 6
-AND orderID <> 'Order ID'
+AND orderID <> 'Order ID'; 
 /*537 iPhones were ordered in March.*/
 
 /*How many iPhones were sold in April? .*/
@@ -245,7 +244,7 @@ SELECT COUNT (orderID)
 FROM BIT_DB.AprSales
 WHERE Product = 'iPhone'
 AND length (orderID)= 6
-AND orderID <> 'Order ID'
+AND orderID <> 'Order ID'; 
 
 /*693 iPhones were ordered in April. */
 
@@ -255,9 +254,9 @@ SELECT COUNT (orderID)
 FROM BIT_DB.MaySales
 WHERE Product = 'iPhone'
 AND length (orderID)= 6
-AND orderID <> 'Order ID'
+AND orderID <> 'Order ID'; 
 
-/*639 iPhones were ordered in May. The month of April holds as the peak in 
+/*639 iPhones were ordered in May.The month of April holds as the peak in 
 sales for the iPhone purchases. Perhaps, people are preparing their summer
 playlists!*/
 
@@ -270,23 +269,22 @@ FROM BIT_DB.customers c
 INNER JOIN BIT_DB.FebSales Feb
 ON c.order_id = Feb.orderID
 WHERE length (orderID) = 6
-AND orderID <> 'Order ID'
+AND orderID <> 'Order ID';
 
 /*There are one thousand orderID's for the month of February alone! */
 
 /*According to this company's database, only 379 iPhones were ordered in January out of the 9,681 orders throughout the whole
 month of sales. Now, I am being a nosey data analyst. Write commands to show the column names of the "JanSales", "FebSales", 
 "MarSales", "AprSales", "MaySales" tables so scrolling is minimized for this sales analysis.*/
-SELECT *FROM BIT_DB.JanSales LIMIT 25
+SELECT *FROM BIT_DB.JanSales LIMIT 25;
 
-SELECT *FROM BIT_DB.FebSales LIMIT 25
+SELECT *FROM BIT_DB.FebSales LIMIT 25;
 
-SELECT *FROM BIT_DB.MarSales LIMIT 25
+SELECT *FROM BIT_DB.MarSales LIMIT 25;
 
-SELECT *FROM BIT_DB.AprSales LIMIT 25
+SELECT *FROM BIT_DB.AprSales LIMIT 25;
 
-SELECT *FROM BIT_DB.MaySales LIMIT 25
-
+SELECT *FROM BIT_DB.MaySales LIMIT 25;
 /*The column names are pretty organized, being that they are the same for each month's table. Bravo to the data entry specialists! 
 The columns for the "JanSales", "FebSales", "MarSales", "AprSales", "MaySales" tables are the following:
 orderID, 
@@ -309,6 +307,77 @@ LEFT JOIN BIT_DB.customers cust
 ON Feb.orderID = cust.order_id
 WHERE Feb.Quantity > 2
 AND length (orderID) = 6
-AND orderID <> 'Order ID'
+AND orderID <> 'Order ID';
+
+/*Now, let us utilize some advanced data filtering techniques in order to analyze the order history in
+ terms of dates of orders!*/
+SELECT orderdate, Product, price
+FROM BIT_DB.FebSales
+WHERE orderdate 
+    BETWEEN '02/13/19 00:00' 
+    AND '02/18/19 00:00'
+ORDER BY price DESC
+
+/*This is right after Valentines'Day!  What a coincidence!  People purchased a lot of over $200 during this time 
+purchasing high-end gifts for their significant others!*/
 
 
+/* Some of the warehouse managers noticed an iPhone purchased from a similar address has been purchased on a recent 
+order.  If it is the same address, our sales and marketing team needs to mail in a warranty notification so that 
+the customer continues to buy from reputable company and tell their friends of the company's customer service! */
+SELECT location, Product
+FROM BIT_DB.FebSales
+WHERE orderdate = '02/18/19 01:35'
+
+
+SELECT orderdate
+, Product
+, location
+FROM BIT_DB.JanSales
+WHERE location = '866 Spruce St, Portland, ME 04101' 
+
+
+SELECT orderdate
+, Product
+, location
+FROM BIT_DB.MarSales
+WHERE location = '866 Spruce St, Portland, ME 04101' 
+
+/*Sounds like our training team needs to give training to the analyst team.  We are all human!*/
+
+/*Write a command that displays the orderdate starting with 02/18/19 and anytime after that in the
+format of (HH:MM).*/
+
+SELECT SUM (quantity)
+FROM BIT_DB.FebSales
+WHERE orderdate like '02/18/19%'
+
+/*There were 508 orders placed after 02/18/19 for the month of February Sales.*/
+
+/*Now the company product manager cannot remember what kind of batteries were sold in 
+February.  Find out that information for him!  .*/
+SELECT distinct Product
+FROM BIT_DB.FebSales
+WHERE Product LIKE '%atteries%'
+
+/*The sales manager wants to know what items sold in February were sold in dollars
+ending in 99 cents versus a full dollar.  Find this out for her! */
+
+SELECT distinct Product
+, price
+FROM BIT_DB.FebSales
+WHERE price LIKE '%.99'
+
+
+/*For the month of February sales for this company, list all of the products sold in 
+in Los Angeles AND display how many of each item were purchased in February from
+Los Angeles as well. */
+
+
+SELECT Product
+, SUM (quantity)
+FROM BIT_DB.FebSales
+WHERE location LIKE '%Los Angeles%'
+GROUP BY Product 
+
+/*It appears that the most purchased items in Los Angeles were triple A batteries! */

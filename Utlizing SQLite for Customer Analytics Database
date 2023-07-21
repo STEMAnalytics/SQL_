@@ -381,3 +381,148 @@ WHERE location LIKE '%Los Angeles%'
 GROUP BY Product 
 
 /*It appears that the most purchased February items in Los Angeles were triple A batteries! */
+
+/*From the sales in the month of January, which New York locations acquired at least 3 orders.
+Furthermore, how many orders did each New York location receive? Make sure to note how the 
+states are listed in the address information (i.e. "NY" or "New York:.*/
+
+SELECT distinct location
+, COUNT (orderID)
+FROM BIT_DB.JanSales
+WHERE location LIKE '%NY%'
+    AND length (orderID) = 6
+    AND orderID <> 'Order ID'
+GROUP BY location
+HAVING count (orderID) > 2
+
+/*In the month of January, the most orders were placed and delivered to
+"961 Jefferson St., New York City, NY 10001" with four orders alone this 
+month.  Three other locations had 3 orders delivered.*/
+
+/*Count the quantity of each headphone style ordered in the February sales
+data.*/
+
+SELECT sum(Quantity) as quantity,
+Product
+FROM BIT_DB.FebSales 
+WHERE Product like '%Headphones%'
+GROUP BY Product
+ORDER BY quantity ASC
+
+/* 844 Bose SoundSport, 1013 Apple Airpods, and 1282 Wired Headphones were sold.
+Let us compare the prices with an extra command based off this analysis. */
+SELECT sum(Quantity) as quantity,
+Product,
+price
+FROM BIT_DB.FebSales 
+WHERE Product like '%Headphones%'
+GROUP BY Product
+ORDER BY price ASC
+
+/*Wired headphones are only $11.99 versus Bose SoundSport headphones being 
+sold at $99.99 and Apple Airpods sold at $150.00.  It is a tight economy after all!
+Interestingly, look below at the results...
+1282	Wired Headphones	11.99
+844	Bose SoundSport Headphones	99.99
+1013	Apple Airpods Headphones	150        */
+
+/* More Apple Airpods were bought in February despite being the most costly option
+versus the cheaper Bose headphones option.  Apple Airpods are very popular! */
+
+/*In the month of February, what was the average amount of money spent per account 
+in February? (This is asking for the average money spent out of the total accounts. 
+This query is not for the average amount money spent per account.)*/
+
+SELECT SUM (quantity*price)/ COUNT (cust.acctnum) AS AverageFebOrder
+FROM BIT_DB.FebSales FEB
+
+LEFT JOIN BIT_DB.customers cust
+ON FEB.orderID = cust.order_id
+
+WHERE length (orderID) = 6
+AND orderID <> 'Order ID' 
+
+/* For the sales month of February, the average amount spent 
+per user account was $190.00.*/
+
+/*Another way to write the query above to answer the same question is below.*/
+SELECT AVG (quantity*price) AS AverageFebOrder
+FROM BIT_DB.FebSales FEB
+
+LEFT JOIN BIT_DB.customers cust
+ON FEB.orderID = cust.order_id
+
+WHERE length (orderID) = 6
+AND orderid <> 'Order ID'
+
+/*For the month of January, what product contributed the most revenue, and 
+how much in dollars and cents. */
+SELECT product AS toprevenue_contributor
+,SUM(quantity*price) AS topJanrevenue
+FROM BIT_DB.JanSales
+GROUP BY product
+ORDER BY SUM(quantity*price) DESC
+LIMIT 1
+
+
+/*Another way to write this command would be the following...*/
+
+
+SELECT SUM(quantity) AS numberPurchased,
+price,
+SUM(quantity)*price as revenue,
+SUM(quantity*price) as revenue2,
+product 
+FROM BIT_DB.JanSales
+GROUP BY product 
+/* The correct way to write this command typically is usually sum(quantity*price) because each product's price 
+typically changes (think of daily deals). Revenue is the product of product price times the quantity sold for each
+product. Sum(quantity)*price works for this database query since the price of each product never changed (a controlled variable).
+If the daily cost of each product changed daily, or ever, sum(price) would not give the "real" revenue total, and thus
+the incorrect answer.*/
+
+/*The product that brought the most 
+revenue was the Macbook Pro Laptop with revenue
+of $399,500. What about the other months?*/
+SELECT product AS toprevenue_contributor
+,SUM(quantity*price) AS topFebrevenue
+FROM BIT_DB.FebSales
+GROUP BY product
+ORDER BY SUM(quantity*price) DESC
+LIMIT 1
+
+/*The Macbook Pro Laptop was bought the most
+in February and bringing in revenue of $467,500.*/
+SELECT product AS toprevenue_contributor
+,SUM(quantity*price) AS topMarRevenue
+FROM BIT_DB.MarSales
+GROUP BY product
+ORDER BY SUM(quantity*price) DESC
+LIMIT 1
+
+/*The Macbook Pro Laptop was bought the most again
+for March Sales and bringing in revenue of $646,000.   */
+
+SELECT product AS toprevenue_contributor
+,SUM(quantity*price) AS topAprRevenue
+FROM BIT_DB.AprSales
+GROUP BY product
+ORDER BY SUM(quantity*price) DESC
+LIMIT 1
+
+/*The Macbook Pro Laptop was bought the most again
+for April Sales and bringing in revenue of $773,500.
+That is the most revenue so far! */
+
+SELECT product AS toprevenue_contributor
+,SUM(quantity*price) AS topMayRevenue
+FROM BIT_DB.MaySales
+GROUP BY product
+ORDER BY SUM(quantity*price) DESC
+LIMIT 1
+
+/*The Macbook Pro Laptop was bought the most again
+for May Sales and bringing in revenue of $787,100.
+That is the most revenue out of all of the months
+of sales for this database!  Someone needs to
+contact the marketing team to find a trend! */

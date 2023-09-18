@@ -526,3 +526,27 @@ for May Sales and bringing in revenue of $787,100.
 That is the most revenue out of all of the months
 of sales for this database!  Someone needs to
 contact the marketing team to find a trend! */
+
+/* For all of the orders created in the month of February, write a command that lists the account numbers of
+individuals that placed orders, a count of the order ID's, order date, quantity, product, price, and location.*/
+
+SELECT 
+cust.acctnum
+,count(cust.order_ID) as Orders
+,Feb.orderdate
+,Feb.Quantity
+,Feb.Product
+,Feb.price
+,Feb.location
+FROM BIT_DB.customers cust
+
+INNER JOIN BIT_DB.FebSales Feb
+ON cust.order_id=Feb.orderid
+
+GROUP BY 
+cust.acctnum
+,Feb.orderdate
+,Feb.Quantity
+,Feb.Product
+,Feb.price
+,Feb.location

@@ -1,0 +1,91 @@
+SELECT company_name
+   ,healthcare_benefits
+   ,paid_time_off_days
+   ,maternity_leave_weeks
+   FROM 'fortune_companies'
+     WHERE healthcare_benefits >= 10
+       AND maternity_leave_weeks >= 5
+       AND healthcare_benefits = 1
+     GROUP BY company_name 
+
+/*Our human resources department wants to know the rankings 
+of benefits for mothers AKA maternity leave is among healthcare
+companies.*/
+SELECT
+company_name,
+CASE 
+  WHEN maternity_leave_weeks >= 12 THEN 'Best workplace for mothers'
+  WHEN maternity_leave_weeks >= 10 THEN 'Good mother benefits'
+  WHEN maternity_leave_weeks >= 8 THEN 'Fair benefits for mothers'
+  WHEN maternity_leave_weeks >= 4 THEN 'Poor workplace for mothers'
+  ELSE 'Do not consider as a mother'
+END AS mother_friendliness
+FROM fortune_companies
+WHERE industry='Healthcare'
+;
+/*What other benefits do the best companies (results render Company B,
+Company D with 12 or more weeks of maternity leave, plus Company W allows
+for 10 or more weeks of maternity leave. We have already established that 
+the industries are healthcare-related.*/
+
+SELECT * FROM fortune_companies
+WHERE company_name IN(
+  'Company B', 'Company D', 'Company W');
+  
+ /*Based off the results, Company B have more than 1000 less employees
+ than Company D, 2 more days of PTO than Company D, and another week of 
+ maternity leave than Company D.  It also generates over three times 
+ the revenue of Company D.  However, employee tenure is almost a year 
+ less than Company D.  While Company B is the best choice to work for mothers, 
+ let us explore the tenure correlation to other factors.*/
+ 
+ SELECT*FROM fortune_companies
+ WHERE avg_employee_tenure >= 6
+ ORDER BY avg_employee_tenure DESC;
+ 
+ /*Exxon Mobil generates a medium range of revenue compared to 
+ remainder result set with the condition that employee tenure is 
+ greater than or equal to 6 years.  This company has within the top five 
+ most employees hired in this result set at 72,000 individuals yet no healthcare benefits.
+ However, the paid time off is between poor and  fair in conditions
+ outlined in above queries regarding maternity leave.  Perhaps, the stock market involvement of this company
+ and the manufacturing necessity makes this company a secure place to be
+ employed.  Most employees at Oil and Gas Companies are male if their roles
+ involve outdoor industrial/electrical activities.*/
+ 
+/*List companies that provide healthcare benefits as well as 
+at a minimum offer 20 PTO days for their employees from this table.*/
+SELECT company_name
+FROM fortune_companies
+WHERE paid_time_off_days > 20
+AND healthcare_benefits=1
+;
+/* Since the results render 13 results, let us find the superstar of 
+general employee benefits.  View the refined query below.*/
+SELECT company_name
+FROM fortune_companies
+WHERE paid_time_off_days > 23
+AND healthcare_benefits=1
+;
+/*Company FF is the winner, offering 23 days of PTO for employees!*/
+
+/* Which retail company generates the least revenue AND what dollar
+amount is that revenue?*/ 
+SELECT  MIN(revenue)
+,company_name
+FROM fortune_companies
+WHERE industry = 'Retail'
+;
+
+/*Company Z generated the least revenue at 180.6 Million dollars.
+What other details about Company Z are there?*/
+
+SELECT*FROM fortune_companies
+WHERE industry = 'Retail';
+
+/*Compared to other retail companies, Company Z has similar PTO days,
+maternity leave weeks, one of the top ranking average employee tenure, but
+no healthcare.  The company generates half of the revenue of Walmart with a 
+small employee workforce. Company S, Z, and GG do not provide healthcare. 
+However, the additional PTO day and maternity week for Company Z compared to 
+Company GG may account for the extra year of employee tenure at Company Z.*/

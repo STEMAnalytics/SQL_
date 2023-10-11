@@ -146,3 +146,23 @@ a higher popularity ranking. */
 
 
 
+
+/*Let us use a Common Table Expression (CTE). 
+Calculate each artist's popularity within the Spotify
+Network Database. For artsits with an average popularity greater 
+than or equal to 90, denote the tag for that artist as 
+"Top Star".*/
+WITH popularity_average_CTE AS (
+SELECT s.artist_name,
+AVG(s.popularity) AS average_popularity
+FROM SpotifyData s 
+GROUP BY s.artist_name
+)
+ 
+SELECT  artist_name,
+        average_popularity,
+        'Top Star' AS tag
+FROM popularity_average_CTE
+WHERE average_popularity>=90 
+
+

@@ -1,4 +1,4 @@
-SELECT company_name
+   SELECT company_name
    ,healthcare_benefits
    ,paid_time_off_days
    ,maternity_leave_weeks
@@ -37,22 +37,43 @@ WHERE company_name IN(
  maternity leave than Company D.  It also generates over three times 
  the revenue of Company D.  However, employee tenure is almost a year 
  less than Company D.  While Company B is the best choice to work for mothers, 
- let us explore the tenure correlation to other factors.*/
+ let us explore the tenure correlation to other factors. JPMorgan and Chase
+ has the most employees but least revenue.  Reach out to the Economics Department
+ for further analysis!*/
  
  SELECT*FROM fortune_companies
  WHERE avg_employee_tenure >= 6
- ORDER BY avg_employee_tenure DESC;
+ ORDER BY avg_employee_tenure DESC
+ LIMIT 10;
  
  /*Exxon Mobil generates a medium range of revenue compared to 
  remainder result set with the condition that employee tenure is 
  greater than or equal to 6 years.  This company has within the top five 
  most employees hired in this result set at 72,000 individuals yet no healthcare benefits.
  However, the paid time off is between poor and  fair in conditions
- outlined in above queries regarding maternity leave.  Perhaps, the stock market involvement of this company
- and the manufacturing necessity makes this company a secure place to be
- employed.  Most employees at Oil and Gas Companies are male if their roles
+ outlined in above queries regarding maternity leave.  Perhaps,  based off 
+ economic analysis and general public knowledge, the stock market
+ involvement of this company  and the manufacturing necessity makes this company a secure place to be
+ employed.  More analysis will be required regarding this hypothesis. 
+ Most employees at Oil and Gas Companies are male if their roles
  involve outdoor industrial/electrical activities.*/
  
+/*Display industries with their average revenue being
+at least $200 Billion, and display this figure.*/
+
+SELECT industry, ROUND(AVG(revenue),1) AS avg_revenue_in_billions
+FROM fortune_companies
+GROUP BY industry
+HAVING avg_revenue_in_billions>=200
+ORDER BY avg_revenue_in_billions ASC
+;
+
+/*Industries that generated the most revenue were Technology at $362.2
+billion, Manufacturing at $358.6 Billion, and Energy at $269.4 Billion.
+Sounds like a psychological study on human's dependency on Technology would
+be a great study regarding these Fortune 500 Companies! Should not environmental 
+efficiency be implemented to account for the large economic contribution of 
+Manufacturing facilities?*/
 /*List companies that provide healthcare benefits as well as 
 at a minimum offer 20 PTO days for their employees from this table.*/
 SELECT company_name
@@ -77,7 +98,7 @@ FROM fortune_companies
 WHERE industry = 'Retail'
 ;
 
-/*Company Z generated the least revenue at 180.6 Million dollars.
+/*Company Z generated the least revenue at 180.6 Billion dollars.
 What other details about Company Z are there?*/
 
 SELECT*FROM fortune_companies

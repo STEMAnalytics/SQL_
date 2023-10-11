@@ -1,6 +1,6 @@
 /*This table showcases more advanced knowledge of Common
-Table Expressions, or CTE's.  This table is called City
-Bike Lanes.
+Table Expressions, or CTE's in addition to Windows Functions.  
+This table is called City Bike Lanes.
 */
 
 CREATE TABLE BIT_DB.CityBikeLanes (

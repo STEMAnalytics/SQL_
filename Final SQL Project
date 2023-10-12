@@ -1,1 +1,38 @@
+/* Here are some questions regarding the SQL project.  */
+
+/* Display non-USA customers with their first name,
+last name, customerID, and Country of Origin.*/
+SELECT FirstName
+, LastName
+, CustomerId
+, Country 
+FROM chinook.customers 
+WHERE Country != "USA";
+
+/* This query can also be written differently
+in regards to "not equal to".*/
+SELECT FirstName
+, LastName
+, CustomerId
+, Country 
+FROM chinook.customers 
+WHERE Country <> "USA";
+
+/* Display customers and all of their data that live in the Country of Brazil.*/
+SELECT * 
+FROM chinook.customers 
+WHERE Country = "Brazil" ;
+
+/* Of the customers from Brazil, display the invoices along with the customer's entire name,
+Date of Invoice, Invoice ID, and Country of Billing. */
+SELECT cust.FirstName
+, cust.LastName
+, inv.InvoiceDate
+, inv.InvoiceId
+, inv.BillingCountry
+FROM chinook.invoices AS inv 
+LEFT JOIN chinook.customers AS cust 
+on inv.CustomerId = cust.CustomerId 
+WHERE inv.BillingCountry = "Brazil";
+
 

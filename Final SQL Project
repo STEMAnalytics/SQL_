@@ -168,4 +168,13 @@ LEFT JOIN chinook.customers AS cust
 on inv.CustomerId = cust.CustomerId 
 WHERE inv.BillingCountry = "Brazil";
 
+/* In the Chinook database, how the Employees are also Sales Agents?*/
+SELECT * FROM chinook.Employees
+WHERE Title = "Sales Support Agent";
 
+/*There are three employees that are sales agents!
+What troupers holding the company line.  Talk to HR
+about hiring more sales reps before these three employees
+look to other companies if the benefits are not good!
+These employees all live in Canada and Report to the Employee
+#2, which is Nancy Edwards, the Sales Manager .*/

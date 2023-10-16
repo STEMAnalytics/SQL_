@@ -1,4 +1,137 @@
-/* Here are some questions regarding the SQL project.  */
+/* The following database is called chinook.   It was an available learning source database set downloaded as an unzipped csv file.
+This database diagram includes many of the interconnected tables (sounds like some good join examples are available)!
+The tables included in this database are the following: 
+-employees 
+-customers
+-invoices
+-invoice_items
+-albums
+-artists
+-tracks
+-playlist_track
+-playlists
+-genres
+-media_types  */
+
+/*The employee table consists of data about employees including employee id, last name, first name, etc. This table's field named ReportsTo 
+clarifies whom each employee reports to.  */
+
+/*-Employee
+-LastName
+-FirstName
+-Title
+-ReportsTo
+-BirthDate
+-HireDate
+-Address
+-City
+-State
+-Country
+-PostalCode
+-Phone
+-Fax
+-Email*/
+
+SELECT*FROM chinook.employees
+/*The customers table consists of data about each customer. The line from a diagram flow between employees.Employeeid and customers.SupportRepID 
+proves that the employees and customers table are related through the specification of ID (sounds like a JOIN potential here!).
+
+/*
+-Customer
+-FirstName
+-LastName
+-Company
+-Address
+-City
+-State
+-Country
+-PostalCode
+-Phone
+-Fax
+-Email
+-SupportRepId
+*/
+
+SELECT*FROM chinook.customers
+/* The invoices table consists of header data from invoices, such as Customer ID, Billing Address, etc.  while the invoice_items table 
+consists of data from invoice line items, such as the following:
+
+-InvoiceId
+-Customer
+-InvoiceDate
+-BillingAddress
+-BillingCity
+-BillingState
+-BillingCountry
+-BillingPostal
+-Total
+
+The invoices and invoice_items tables 
+are related by Invoiceid. */
+
+SELECT*FROM chinook.invoices
+
+/*The artists table consists of data about artists, such as Artistid and Name.*/
+SELECT*FROM chinook.artists
+
+
+
+/*  The albums table consists of data about single tracks, such as AlbumId (INT), Title, and ArtistId (INT).   
+It is important to note that each album can only have one artsist to which 
+owns it, but each artsist can have ownership of more than one album.   It has a similar field to the 
+album table (described below) by the field Artsitid.*/
+SELECT*FROM chinook.albums
+
+/* The media_types table consists of  following types of media:
+
+-MPEG audio file
+-protected AAC audio file
+-protected MPEG-4 video file
+-purchased AAC audio file
+-AAC audio file
+It has a similar field to the tracks table (described below) by the field MediaTypeid.*/
+
+SELECT*FROM chinook.media_types
+
+/* The genres table consists of the following music types in a column
+called Name while the column GenreId is INT from 1-7 asc with the 
+field values listed below.
+
+-rock
+-jazz
+-metal
+-alternative & punk
+-rock and roll
+-blues
+-latin
+*/
+SELECT*FROM chinook.genres
+
+/* The tracks table consists of song data. Each track belongs only one album.  It has a similar field to the 
+genres table (described below) by the field Genreid.  */
+
+/*
+-TrackId
+-Name
+-AlbumId
+-MediaType
+-GenreId
+-Composer
+-Milliseconds
+-Bytes
+-UnitPrice   */
+
+SELECT*FROM chinook.tracks
+
+
+
+/* The playlists table consists of playlist's data. Every playlist has a series of tracks, but each track can be on more than one playlist.
+There are infinitessa possible relationships between the playlist and the tracks tables, especially by column Playlistid. thus, the 
+playlist_track table illuminates this two-table relationship.   The only columns for the playlists table are PlaylistId and Name. */
+
+SELECT*FROM chinook.playlists
+
+/* Here are some questions regarding this SQL project title "Final SQL Project". */
 
 /* Display non-USA customers with their first name,
 last name, customerID, and Country of Origin.*/

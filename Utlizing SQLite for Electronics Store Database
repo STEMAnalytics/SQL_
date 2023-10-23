@@ -1,5 +1,5 @@
 /*After downloading this SQL database named BIT_DB (an acronymn for Break Into Tech Database) that was imported in "All Files" format from a Dropbox, let us check out 
-what tables are within this database. This database contains following tables called: 
+what tables are within this database. This database is called Electronics Store Database and contains following tables called: 
 AprSales
 customers
 FebSales

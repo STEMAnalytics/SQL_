@@ -1,0 +1,476 @@
+/*Test the tables created. */
+SELECT*FROM Customer
+/*There are 91 rows in the customer table.*/
+
+/*Let us check that all of the other four tables
+in the PracticeDB-InterSQL Database that we filled 
+using the text files "TableScripts" and "RecordsScript".*/
+SELECT*FROM OrderItem
+/*There are 830 rows in the OrderItem table.*/
+
+SELECT*FROM Product
+/*There are 2155 rows in the Product table.*/
+SELECT*FROM Supplier
+/*There are 29 rows in the Product table.*/
+
+/*Now some investigative questions! 
+Why are there so many records in the CustomerOrder & OrderItem
+tables?   These two tables connect to other tables.  The CustomerOrder
+table has data from each order made by the Customer.  The OrderItem
+table holds data regarding the item that the customer purchased per order.*/
+
+/*Now, let us work on using JOINS to analyze these tables and their
+relationships!*/
+
+/*Alright,  a sales representative wants to know all of the customers that 
+have ordered from this company!   Note, if a customer has ordered many times, 
+that customer will be listed more than once.   Display customers that have ordered 
+and join tables based off of the customer ID number (the PK's of each table) using a LEFT JOIN so that each
+customer will be in the results. The result set pulls customers from Table 1/Customer with matching 
+rows from Table 2/CustomerOrder.   If there is a customer that has not placed an order,
+the result for that row will be "NULL" on Table 2.*/
+SELECT * FROM
+Customer
+LEFT JOIN CustomerOrder
+ON  Customer.CustId = CustomerOrder.CustomerId
+/*We have 832 results from this query.*/
+
+/*What happens when we use a RIGHT JOIN?  This query displays the customer
+order from Table 2/CustomerOrder as well as displaying the customer whom ordered
+from Table 1/Customer.  The difference between the RIGHT and LEFT JOIN indicates that
+two people that are Customers have never placed an order at this company.  Get
+that advertising team on the data to figure out if there is a marketing issue!  Let
+us use a query that will display a list of customers that have never ordered by 
+eliminating unused rows.*/
+SELECT * FROM 
+CustomerOrder
+RIGHT JOIN Customer
+ON CustomerOrder.CustomerId = Customer.CustId
+/*There are no nulls in the result set of 832 rows from using a RIGHT JOIN. 
+For this database, only customers can order if they are pre-established in the
+database already as a customer.*/
+
+SELECT * FROM 
+Customer
+LEFT JOIN CustomerOrder
+ON Customer.CustId = CustomerOrder.CustomerId
+WHERE CustomerOrder.CustomerId IS NULL
+
+/*This query uses a LEFT JOIN with a WHERE filter clause from Table 2/CustomerOrder
+so that only CustomerID numbers with NULL is found using the IS NULL operator.*/
+
+/*Now, if there are nulls in both JOIN results/both tables?  Let us try an INNER JOIN!
+The query below will find the matching rows from Table 1 and Table 2!*
+Write a query that returns the rows that have matching rows in both tables. */
+SELECT*FROM
+Customer
+INNER JOIN 
+CustomerOrder
+ON Customer.CustId = CustomerOrder.CustomerId
+
+/*The result set from this query includes 830 rows.  This is not the same as a RIGHT JOIN 
+because of the "business rule" that a customer cannot order without being in the database.
+If this was not the case, it is possible that NULL rows would be displayed if orders from 
+Table 2/CustomerOrder did not match a customer from Table 1/Customers.*/
+
+/*Here is another business rule in this database:  A supplier row has to exist within the 
+database in order to insert a product into the database.*/
+
+/*Let us try JOINs with Table 5/Supplier and Table 4/Product!   This will be a large dataset. 
+An even larger database would provide a tediously massive data result set.*/
+SELECT*FROM 
+Supplier
+LEFT JOIN Product
+ON  Supplier.SupplierId = Product.ProductID
+
+SELECT*FROM 
+Supplier
+RIGHT JOIN Product
+ON  Supplier.SupplierId = Product.ProductID
+
+SELECT*FROM 
+Supplier
+FULL JOIN Product
+ON  Supplier.SupplierId = Product.ProductID
+
+/*Each join should have displayed the same results. Even though there are fewer results in the 
+Supplier Table, these JOINs pulled rows with matches.  The Supplier rows has many listings in the result-set
+since a supplier provides multiple products.  The business rule for this database is that no products exist
+without a supplier match.*/
+
+SELECT*FROM
+Customer
+LEFT JOIN 
+CustomerOrder
+ON Customer.CustId = CustomerOrder.CustomerId
+WHERE
+CustomerOrder.CustomerId IS NULL
+
+SELECT*FROM
+Customer
+FULL JOIN 
+CustomerOrder
+ON Customer.CustId = CustomerOrder.CustomerId
+WHERE
+CustomerOrder.CustomerId IS NULL or Customer.CustId IS NULL
+
+/*Same results!  Remember the business rule for this database!*/
+
+SELECT * FROM 
+Customer
+LEFT JOIN CustomerOrder
+ON Customer.CustId = CustomerOrder.CustomerId
+ORDER BY Customer.CustId DESC
+
+/*This orders the result-set by the CustomerId DESC from highest to lowest.
+It just pulls rows and displays them based on the coder's command. */
+
+SELECT
+Customer.FirstName
+, Customer.LastName
+, Customer.CellPhone
+,CustomerOrder.InvoiceNumber
+, CustomerOrder.OrderDate
+,CustomerOrder.TotalAmount
+FROM Customer
+LEFT JOIN 
+CustomerOrder
+ON Customer.CustId = CustomerOrder.CustomerId
+ORDER BY Customer.CustId
+
+
+/*Let us JOIN 3 tables!  */
+SELECT*FROM Product
+/*This table has 78 rows.*/
+SELECT*FROM Supplier
+/*This table has 29 rows.*/
+SELECT*FROM OrderItem
+/*This table has 2155 rows.*/
+
+/*What happens when you connect the tables 
+with the PKs to the FKs.  There has to be several
+items from the Product table also on one order.  
+The same product can also be ordered on many orders.*/
+
+/*Let us have a more organized result-set!*/
+SELECT
+OrderItem.ProductId, Product.ProductName, OrderItem.UnitPrice,OrderItem.Quantity,Product.Package
+FROM OrderItem
+LEFT JOIN Product
+ON OrderItem.ProductId = Product.ProductId
+ORDER BY
+OrderItem.ProductId
+
+/*When adding a third table, remember the following items:
+1. Don't be too concerned about NULLs as INNER JOIN negates or JOIN/auto-defaults 
+to INNER JOIN.
+2. When joining a 3rd table, the ON statemnt has to be listed in the same sequence as 
+you join the tables. Each table must connect to another with the FK to the PK.
+
+The tablenames are required for each column so that the database can recognize which table
+it is being pulled from.   Remember, using only one tablename does not require a "tablename."
+before the column name.*/
+
+SELECT
+OrderItem.ProductId, Product.ProductName, OrderItem.UnitPrice,OrderItem.Quantity,Product.Package, Supplier.CompanyName,Supplier.Country
+FROM OrderItem
+JOIN Product
+ON OrderItem.ProductId = Product.ProductId
+JOIN Supplier
+ON Product.SupplierId = Supplier.SupplierId
+ORDER BY Supplier.Country DESC, Supplier.CompanyName
+/*Now the result-set is pulled and displayed by the column of the name of the company, from z.*/
+
+SELECT
+OrderItem.ProductId, Product.ProductName, OrderItem.UnitPrice,OrderItem.Quantity,Product.Package, Supplier.CompanyName,Supplier.Country
+FROM OrderItem
+JOIN Product
+ON OrderItem.ProductId = Product.ProductId
+JOIN Supplier
+ON Product.SupplierId = Supplier.SupplierId
+ORDER BY Supplier.Country DESC, Product.ProductName
+/*Now the result-set is pulled and displayed by the column of ProductName, from z.*/
+
+
+/*Now, let us JOIN four tables!*/
+
+SELECT 
+Customer.FirstName
+, Customer.LastName
+, Customer.Country
+,CustomerOrder.TotalAmount
+, Product.ProductName
+,OrderItem.UnitPrice
+, OrderItem.Quantity
+, Product.Package
+,Supplier.CompanyName
+, Supplier.Country
+FROM Customer
+JOIN CustomerOrder
+ON Customer.CustId = CustomerOrder.CustomerId
+JOIN OrderItem
+ON CustomerOrder.OrderId = OrderItem.OrderId
+JOIN Product
+ON OrderItem.ProductId = Product.ProductId
+JOIN Supplier
+ON Supplier.SupplierId = Product.SupplierId
+ORDER BY Customer.LastName, Customer.FirstName, Customer.Country,Supplier.CompanyName, Supplier.Country
+
+/*Customers with their respective orders along with the products within each order are sorted by the
+customer's lastname.  The order of column name is very important as it organizes which column is listed first
+down to last. The JOIN order is extremely important so that the correct FKs are connected to the correct PKs.The 
+order of the JOIN is not important, but the relationships between the tables and connecting them with the correct
+relationship is.  The correct FK hsa to connect with the correct PK. SQL Server has a query optimizer that calculates what 
+will give the quickest results.  */
+
+/*Let us use aliases to clean up this query some!*/
+SELECT
+C.FirstName, C.LastName, C.Country,O.TotalAmount, P.ProductName,I.UnitPrice, I.Quantity, P.Package,S.CompanyName, S.Country
+FROM Customer AS C
+JOIN CustomerOrder AS O
+ON C.CustId = O.CustomerId
+JOIN OrderItem AS I
+ON O.OrderId = I.OrderId 
+JOIN Product AS P
+ON I.ProductId = P.ProductId
+JOIN Supplier AS S
+ON S.SupplierId = P.SupplierId
+ORDER BY C.LastName, C.FirstName, C.Country,S.CompanyName, S.Country
+
+/*Write a query that displays the Customers and the purchased items of each one.  Which columns should be displayed 
+and how should the result-set be organized?*/
+SELECT 
+c.FirstName
+,c.LastName
+,c.Country
+,p.ProductName
+,o.OrderID,p.ProductID
+FROM Customer as c
+JOIN CustomerOrder AS o
+ON c.CustID = o.CustomerId
+JOIN OrderItem AS i
+ON o.OrderID = i.OrderId
+JOIN Product AS p
+ON i.ProductId = p.ProductId
+ORDER BY c.LastName, c.Country
+
+/*The marketing team wants to see the products ordered sorted by countries.*/
+SELECT
+C.FirstName, C.LastName, S.Country
+FROM Customer AS C
+JOIN CustomerOrder AS O
+ON c.CustId = O.CustomerId
+JOIN OrderItem AS I
+on O.OrderId = I.OrderId
+JOIN Product AS P
+ON I.ProductId = P.ProductId
+JOIN
+Supplier AS S
+ON P.SupplierId = S.SupplierId
+ORDER BY C.LastName, S.Country
+
+/*Let us JOIN 3 tables!  */
+SELECT*FROM Product
+/*This table has 78 rows.*/
+SELECT*FROM Supplier
+/*This table has 29 rows.*/
+SELECT*FROM OrderItem
+/*This table has 2155 rows.*/
+
+/*What happens when you connect the tables 
+with the PKs to the FKs.  There has to be several
+items from the Product table also on one order.  
+The same product can also be ordered on many orders.*/
+
+/*Let us have a more organized result-set!*/
+SELECT
+OrderItem.ProductId, Product.ProductName, OrderItem.UnitPrice,OrderItem.Quantity,Product.Package
+FROM OrderItem
+LEFT JOIN Product
+ON OrderItem.ProductId = Product.ProductId
+ORDER BY
+OrderItem.ProductId
+
+/*When adding a third table, remember the following items:
+1. Don't be too concerned about NULLs as INNER JOIN negates or JOIN/auto-defaults 
+to INNER JOIN.
+2. When joining a 3rd table, the ON statemnt has to be listed in the same sequence as 
+you join the tables. Each table must connect to another with the FK to the PK.
+
+The tablenames are required for each column so that the database can recognize which table
+it is being pulled from.   Remember, using only one tablename does not require a "tablename."
+before the column name.*/
+
+SELECT
+OrderItem.ProductId, Product.ProductName, OrderItem.UnitPrice,OrderItem.Quantity,Product.Package, Supplier.CompanyName,Supplier.Country
+FROM OrderItem
+JOIN Product
+ON OrderItem.ProductId = Product.ProductId
+JOIN Supplier
+ON Product.SupplierId = Supplier.SupplierId
+ORDER BY Supplier.Country DESC, Supplier.CompanyName
+/*Now the result-set is pulled and displayed by the column of the name of the company, from z.*/
+
+SELECT
+OrderItem.ProductId, Product.ProductName, OrderItem.UnitPrice,OrderItem.Quantity,Product.Package, Supplier.CompanyName,Supplier.Country
+FROM OrderItem
+JOIN Product
+ON OrderItem.ProductId = Product.ProductId
+JOIN Supplier
+ON Product.SupplierId = Supplier.SupplierId
+ORDER BY Supplier.Country DESC, Product.ProductName
+/*Now the result-set is pulled and displayed by the column of ProductName, from z.*/
+
+
+/*Now, let us JOIN four tables!*/
+
+SELECT 
+Customer.FirstName
+, Customer.LastName
+, Customer.Country
+,CustomerOrder.TotalAmount
+, Product.ProductName
+,OrderItem.UnitPrice
+, OrderItem.Quantity
+, Product.Package
+,Supplier.CompanyName
+, Supplier.Country
+FROM Customer
+JOIN CustomerOrder
+ON Customer.CustId = CustomerOrder.CustomerId
+JOIN OrderItem
+ON CustomerOrder.OrderId = OrderItem.OrderId
+JOIN Product
+ON OrderItem.ProductId = Product.ProductId
+JOIN Supplier
+ON Supplier.SupplierId = Product.SupplierId
+ORDER BY Customer.LastName, Customer.FirstName, Customer.Country,Supplier.CompanyName, Supplier.Country
+
+/*Customers with their respective orders along with the products within each order are sorted by the
+customer's lastname.  The order of column name is very important as it organizes which column is listed first
+down to last. The JOIN order is extremely important so that the correct FKs are connected to the correct PKs.The 
+order of the JOIN is not important, but the relationships between the tables and connecting them with the correct
+relationship is.  The correct FK hsa to connect with the correct PK. SQL Server has a query optimizer that calculates what 
+will give the quickest results.  */
+
+/*Let us use aliases to clean up this query some!*/
+SELECT
+C.FirstName, C.LastName, C.Country,O.TotalAmount, P.ProductName,I.UnitPrice, I.Quantity, P.Package,S.CompanyName, S.Country
+FROM Customer AS C
+JOIN CustomerOrder AS O
+ON C.CustId = O.CustomerId
+JOIN OrderItem AS I
+ON O.OrderId = I.OrderId 
+JOIN Product AS P
+ON I.ProductId = P.ProductId
+JOIN Supplier AS S
+ON S.SupplierId = P.SupplierId
+ORDER BY C.LastName, C.FirstName, C.Country,S.CompanyName, S.Country
+
+/*Write a query that displays the Customers and the purchased items of each one.  Which columns should be displayed 
+and how should the result-set be organized?*/
+SELECT 
+c.FirstName
+,c.LastName
+,c.Country
+,p.ProductName
+,o.OrderID,p.ProductID
+FROM Customer as c
+JOIN CustomerOrder AS o
+ON c.CustID = o.CustomerId
+JOIN OrderItem AS i
+ON o.OrderID = i.OrderId
+JOIN Product AS p
+ON i.ProductId = p.ProductId
+ORDER BY c.LastName, c.Country
+
+/*The marketing team eants to see the products ordered sorted by countries.*/
+SELECT
+C.FirstName, C.LastName, S.Country
+FROM Customer AS C
+JOIN CustomerOrder AS O
+ON c.CustId = O.CustomerId
+JOIN OrderItem AS I
+on O.OrderId = I.OrderId
+JOIN Product AS P
+ON I.ProductId = P.ProductId
+JOIN
+Supplier AS S
+ON P.SupplierId = S.SupplierId
+ORDER BY C.LastName, S.Country
+
+/*Let us filter this data!  Use the AND Boolean operator in order to find out which
+customers with the last name of 'Brown' also spent a total of over $500 for the Sales
+Manager.*/
+
+SELECT*FROM Customer AS C
+JOIN CustomerOrder AS O
+ON C.CustId = O.CustomerId
+	WHERE C.LastName ='Brown'
+	OR O.TotalAmount > 500
+/*These may not be the same Mr. Brown! Remember that the apostrophes around Brown 
+declare it as a nvarchar since it is defined as toher text data types. */
+
+SELECT*FROM Customer AS C
+JOIN CustomerOrder AS O
+ON C.CustId = O.CustomerId
+	WHERE C.LastName ='Brown'
+	OR O.TotalAmount > 500
+
+/*The display set will render orders with a customer with either the last name is Brown or $500 
+in total of purchase.  This result-set is large of 612.*/
+
+/*Let us use the NOT operator.*/
+SELECT*FROM Customer AS C
+JOIN CustomerOrder AS O
+ON C.CustId = O.CustomerId
+	WHERE 
+	NOT c.LastName = 'Brown'
+	AND NOT o.TotalAmount > 500
+/*Both conditions must be true in order to be displayed in the result-set.  */
+
+/*IN & BETWEEN Operators. IN operators are used when multiple values are being checked
+if they are true.*/
+SELECT*FROM Customer AS C
+JOIN CustomerOrder AS O
+	ON	
+	C.CustId = O.CustomerId
+	WHERE C.LastName 
+		IN (
+		'Brown'
+		, 'Wilson'
+		,'Bennett'
+			)
+		AND O.TotalAmount > 500
+/*The IN operator query renders 27 rows.*/
+
+/*Now, the BETWEEN operator!*/
+SELECT*FROM Customer AS C
+JOIN CustomerOrder AS O
+	ON C.CustId = O.CustomerId
+	WHERE O.TotalAmount 
+		BETWEEN 100
+			AND 500
+/*The result-set gives 182 rows.  There are two conditions for this BETWEEN operator.*/
+
+/*LIKE operator with Wildcards.*/
+SELECT*FROM Customer AS C
+JOIN CustomerOrder AS O
+	ON C.CustId = O.CustomerId
+	WHERE C.LastName 
+		LIKE 'Berg%'
+		AND O.TotalAmount > 500
+
+/*The percentage and underscore operator is a frequently used operator. There are not many names 
+that include characters 'Berg', so a wildcard is highly recommended. Norway cell phone number 
+sequence is interesting! Check it out!  */
+
+/*SELECT DISTINCT and the IS NOT Operator and the SELECT DISTINCT Clause.*/
+SELECT DISTINCT C.Country
+	FROM Customer AS C
+	JOIN CustomerOrder AS O
+	ON C.CustId = O.CustomerId
+		WHERE O.TotalAmount > 5000
+
+/*Only the countries are listed. The DISTINCT only allows one row per country to be displayed. 
+Without it, 38 rows are displayed.*/

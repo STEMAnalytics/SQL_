@@ -1,3 +1,5 @@
+/*Data was provided by course at Central Georgia Technical College, Intermediate SQL.*/
+
 /*Test the tables created. */
 SELECT*FROM Customer
 /*There are 91 rows in the customer table.*/
@@ -417,7 +419,8 @@ ON C.CustId = O.CustomerId
 	WHERE C.LastName ='Brown'
 	OR O.TotalAmount > 500
 
-/*The display set will render orders with a customer with either the last name is Brown or $500 
+/*The display set will render orders with a customer with 
+either the last name is Brown or $500 
 in total of purchase.  This result-set is large of 612.*/
 
 /*Let us use the NOT operator.*/
@@ -465,6 +468,54 @@ JOIN CustomerOrder AS O
 that include characters 'Berg', so a wildcard is highly recommended. Norway cell phone number 
 sequence is interesting! Check it out!  */
 
+/*Use an LIKE operator with a percent sign within a SQL query. Use the percentage sign!*/
+SELECT*FROM Product
+AS p
+WHERE
+	p.ProductName 
+		LIKE '%dried%'
+	ORDER BY p.ProductName
+/*The advertising coordinator could not remember how the product's name was spelled,
+so the percentage sign renders results with the sequence within the percentage signs .*/
+
+/*Write a query that reveals how many product are within a package .*/
+SELECT*FROM Product AS p
+	WHERE p.Package 
+	LIKE '%24%'
+	ORDER BY p.ProductName
+
+/*The Supplier table contains 22 packages that have %24'% products within them.*/
+
+/*Let us try using the LIKE Operator with Underscore (_).  The underscore can only
+represent one character, which helps if there is only one letter in a name that you are not 
+sure of how to spell correctly.*/
+SELECT*FROM Customer AS C
+	WHERE C.LastName
+	LIKE 'Peters_n'
+	ORDER BY C.LastName
+
+/*There is only one Petersen last name within this database.  No
+Peterson!  See the usefulness of the LIKE Operator using an Underscore!*/
+
+SELECT DISTINCT C.City
+	FROM Customer AS C 
+
+/*There are 64 citites from where customers are located. How many cities within
+the USA are customers located, a question from the web developer team!*/
+SELECT DISTINCT C.City
+	FROM Customer AS C 
+	WHERE C.Country = 'USA'
+/*The answer is 19 different cities!*/
+
+/*If we do not use distinct within the previous query...  .*/
+SELECT C.City
+	FROM Customer AS C 
+	WHERE C.Country = 'USA'
+
+/*The result-set is 41 rows.  This tells the web developer team
+that more than one customer lives in some of the cities within the USA.
+*/
+
 /*SELECT DISTINCT and the IS NOT Operator and the SELECT DISTINCT Clause.*/
 SELECT DISTINCT C.Country
 	FROM Customer AS C
@@ -474,3 +525,145 @@ SELECT DISTINCT C.Country
 
 /*Only the countries are listed. The DISTINCT only allows one row per country to be displayed. 
 Without it, 38 rows are displayed.*/
+
+/*IS NOT NULL Operator.  This table has alot of nulls, let us filter those out of the Fax column.*/
+SELECT*FROM Supplier AS S
+	WHERE S.Fax IS NOT NULL
+
+/*Out of 29 rows, 13 rows are in the result-set.   16 of the suppliers do not have a fax number in
+this database. The WHERE clause narrows down the result-set according to the condition.  One is required 
+to know what they want to retrieve in order to filter the result-set with a query!  the IN and BETWEEN
+operators retrieve a range from the database.  The LIKE operator is used for wildcards and NOT NULL 
+gives a result-set where rows within a database are not empty.*/
+
+SELECT*FROM Customer AS C
+JOIN CustomerOrder AS O
+	ON C.CustId = O.CustomerId
+	WHERE C.Country = 'France'
+		AND O.TotalAmount > 800
+	ORDER BY C.LastName
+/*The AND condition narrows down the result-set: 32 (>800 rows) to France (11 rows). This result 
+indicates that any one person made many orders.*/
+
+/*Which suppliers are from Frankenmuth (town) OR Germany.*/
+SELECT*FROM Supplier 
+	WHERE Country = 'Germany'
+		OR City = 'Fran%'
+/*Use an OR operator within a SQL query.*/
+SELECT*FROM Product AS P
+	WHERE NOT IsDiscontinued = 1
+
+/*The result-set contains 70 rows.*/
+
+SELECT*FROM Product AS P
+WHERE NOT UnitPrice > 20	
+/*The result-set contains 41 rows.  This displays products under 20 bucks.*/
+
+/*Use an IN operator within a SQL query.  The Marketing Director wants to know the suppliers from 
+the list of countries below and WHAT ITEMS have been also discontinued.*/
+SELECT*FROM Supplier AS S
+JOIN Product AS P 
+ON S.SupplierId = P.SupplierId
+	WHERE S.Country 
+		IN (
+		'Germany'
+		,'Norway'
+		,'Sweden'
+		)
+			AND P.IsDiscontinued = 1
+	ORDER BY S.Country
+
+/*The Plutzer L% Supplier's product ID's 28 and 29 (R% Sauerkraut and Thuringer Rost%) in Germany has been discontinued .*/
+
+/*Let us use the BETWEEN Operator within another query, which displays
+data within a specified range in a result-set.   The Sales Team wants to know which
+suppliers in the United States have products within the price range of $10-$20
+that are also made in the USA.*/
+SELECT*FROM Supplier AS S
+JOIN Product AS P
+ON S.SupplierId = p.SupplierId
+	WHERE S.Country = 'USA'
+		AND p.UnitPrice 
+			BETWEEN 10 
+			AND 20
+	ORDER BY p.UnitPrice
+
+/*Nine suppliers meet these specifications.  All of the information from the supplier
+table was listed as the team needs the contact information.*/
+
+
+/*Using NOT NULL to filter data in a result-set .*/
+SELECT*FROM
+Customer AS C 
+LEFT JOIN CustomerOrder AS O
+ON C.CustId = O.CustomerId
+WHERE O.CustomerId IS NOT NULL
+
+/*This query gives only rows without the CustomerID being NULL from the CustomerOrder 
+table. There are 830 rows returned from this query.*/
+
+SELECT*FROM
+Customer AS C 
+JOIN CustomerOrder AS O
+ON C.CustId = O.CustomerId
+WHERE O.CustomerId IS NOT NULL
+
+/*This query also resulted in 830 rows.*/
+
+SELECT*FROM
+Customer AS C 
+JOIN CustomerOrder AS O
+ON C.CustId = O.CustomerId
+/*Deleting the WHERE clause renders 830 rows from this query.*/
+
+SELECT*FROM
+Customer AS C 
+LEFT JOIN CustomerOrder AS O
+ON C.CustId = O.CustomerId
+/*Deleting the WHERE clause and using a LEFT JOIN again renders
+832 rows from this query.*/
+
+/* In summary, the LEFT JOIN is not NULL specific unless stated otherwise
+using IS NOT NULL does not display any NULL rows since the JOIN just pulls
+what iss matching from the tables. A big takeaway is that the LEFT JOIN will only retrieve
+NULLS from table 1, or the left table.  JOIN cannot do this action.*/
+SELECT*FROM Customer AS C
+JOIN CustomerOrder AS O
+ON C.CustId = O.CustomerId
+	WHERE C.Country = 'Austria'
+	AND O.TotalAmount < 1000
+
+SELECT*FROM Customer AS c
+JOIN CustomerOrder AS O
+ON C.CustId = O.CustomerId
+	WHERE C.Country = 'Austria'
+	AND O.TotalAmount 
+	BETWEEN 1000 AND 3000
+
+SELECT DISTINCT C.FirstName
+FROM Customer AS C
+
+/*Let us try some GROUP BY and aggregate functions!*/
+SELECT s.CompanyName,
+	FORMAT(AVG(p.UnitPrice),'C')'Average Unit Price'
+FROM Product p
+JOIN Supplier s
+ON p.SupplierId = s.SupplierId
+GROUP BY s.CompanyName
+
+
+/*Our result-set is 29 rows.  Averages are displayed in the format of dollars with 
+two decimal places for cents.  The average unit price for 'Toyko Traders' is $46.00.
+Notice the lack of 'AS' when stating aliases like the previous query. An alias is a single
+character.  The use of 'AS' is best to be used for beginners in their SQL journey. */
+
+SELECT s.CompanyName,
+FORMAT(AVG(p.UnitPrice),'C')'Average Unit Price'
+		,COUNT(p.UnitPrice)'Total Items'
+FROM Product p
+JOIN Supplier s
+ON p.SupplierId = s.SupplierId
+GROUP BY s.CompanyName
+
+/*We did not use SUM for UnitPrice since no sales insights could be used versus using the 
+money generated.*/

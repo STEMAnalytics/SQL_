@@ -667,3 +667,47 @@ GROUP BY s.CompanyName
 
 /*We did not use SUM for UnitPrice since no sales insights could be used versus using the 
 money generated.*/
+
+select c.Country
+	,COUNT(c.custID) 'Number of Customers'
+	,SUM(o.TotalAmount) 'Total Amount'
+	,AVG(o.TotalAmount) 'Average Amount'
+FROM Customer c
+JOIN CustomerOrder o
+ON c.CustId = o.CustomerId
+	GROUP BY c.Country
+ORDER BY c.Country
+
+/*COUNT functions sort through the table and counts
+via the GROUP BY column value as it progresses through the
+table.  The SUM function scans through the number type column
+and adds a group total based upon the GROUP BY column. When the 
+GROUP BY matches, the value of the SUM column is added to the 
+running total of the SUM column.  The TotalAmount per customer
+is added using the GROUP BY Country column.  Customers from Italy
+get summed of the TotalAmount column.  The AVG funnction is
+similar to the ADD function, and the only change is that it performs
+an average calculation versus a sum of the specifications of the 
+query.   Spanish customers' TotalAmount is now averaged.  One thing
+to remember is that COUNT performs on all column datatypes.  Other
+aggregate functions perform calculations on columns containg numeric type of 
+data.  Calculation columns without an alias would render a "No Column Name".*/
+
+
+
+/*FORMAT function only changes the display, not the formatted content, of data types
+INTEGER, decimal and datetime.  This function needs two data pieces, or arguments and
+the optional argument with square brackets [] can be left off (i.e. FORMAT(value,format[culture]).
+Unless it is stated, the FORMAT function will show the user's default display.*/
+
+/*FORMAT(SUM(o.TotalAmount), 'C', 'en-US') 'Total Amount'    This displays the $ with commas and 2
+decimal places.*/
+
+/*FORMAT(AVG(o.TotalAmount), 'N', 'en-US') 'Average Amount'      This displays commas and two
+decimal places.  
+
+Using 'en-GB' would use UNited Kingdom value of pounds.  This is an example of culture code.
+
+These are two examples of FORMAT functions.*/
+
+

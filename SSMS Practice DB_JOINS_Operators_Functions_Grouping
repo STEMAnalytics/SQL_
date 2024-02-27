@@ -1,5 +1,3 @@
-/*Data was provided by course at Central Georgia Technical College, Intermediate SQL.*/
-
 /*Test the tables created. */
 SELECT*FROM Customer
 /*There are 91 rows in the customer table.*/
@@ -711,3 +709,81 @@ Using 'en-GB' would use UNited Kingdom value of pounds.  This is an example of c
 These are two examples of FORMAT functions.*/
 
 
+/*Use GROUP and AVG functions.  Find out the Average Unit Price with the dollar sign and two
+decimal places using the FORMAT function for products from
+each company within the Supplier Table.  Use a JOIN,
+Alias for Unit Price as well.  */
+SELECT
+s.CompanyName,
+FORMAT (AVG(p.UnitPrice),'C') 'Average Unit Price'
+FROM Product p
+JOIN Supplier s
+ON p.SupplierId = s.SupplierId
+GROUP BY s.CompanyName
+
+/*We have 29 rows in the result-set. Toyko Traders sold an average of 
+$46.00 per product.*/
+
+/*Perform more than one join in order to show the Operations Vice President the total 
+items purchased per customer (sorted in descending order) as well as aliases that 
+utilize aggregate functions for more information per customer.*/
+SELECT c.CustId
+,COUNT (o.OrderId) '# of Orders'
+,FORMAT (SUM(o.TotalAmount),'C')'Total Amount'
+,FORMAT(AVG(i.UnitPrice),'C')'Average Price'
+,FORMAT(MIN(i.UnitPrice),'N')'Lowest Priced Item'
+,FORMAT(MAX(i.UnitPrice),'C')'Highest Priced Item'
+,SUM(i.Quantity)'Total Items Purchased'
+FROM Customer c
+JOIN CustomerOrder o
+ON c.CustId = o.CustomerId
+
+JOIN OrderItem i
+ON o.OrderId = i.OrderId
+GROUP BY c.CustId
+ORDER BY [Total Items Purchased] DESC
+/*The customer with ID #71 purchased 4958 items with a grand total of 
+$481,076.03 spent.*/
+
+/*Let us try grouping multiple columns within this database.
+Group_Country&City_CountOrderId NOTEPAD FILE. */
+
+SELECT DISTINCT
+c.Country
+,COUNT (o.OrderId)'# of Orders'
+,FORMAT(SUM(o.TotalAmount),'C')'Total Amount'
+,FORMAT(AVG(i.UnitPrice),'C')'Average Price'
+,FORMAT(MIN(i.UnitPrice),'N')'Lowest Priced Item'
+,FORMAT(MAX(i.UnitPrice),'C')'Highest Priced Item'
+,SUM(i.Quantity)'Total Items Purchased'
+FROM Customer c
+JOIN CustomerOrder o
+ON c.CustId = o.CustomerId
+JOIN OrderItem i
+ON o.OrderId = i.OrderId
+GROUP BY c.Country
+ORDER BY c.Country
+/*Data was provided by course at Central Georgia Technical College, Intermediate SQL.*/
+
+/*There are 19 rows in this result-set.  What if the Operations VP wants more details, such as order 
+information based by city than just the country?.*/
+SELECT
+c.Country
+, c.city
+,COUNT (o.OrderId)'# of Orders'
+,FORMAT(SUM(o.TotalAmount),'C')'Total Amount'
+,FORMAT(AVG(i.UnitPrice),'C')'Average Price'
+,FORMAT(MIN(i.UnitPrice),'N')'Lowest Priced Item'
+,FORMAT(MAX(i.UnitPrice),'C')'Highest Priced Item'
+,SUM(i.Quantity)'Total Items Purchased'
+FROM Customer c
+JOIN CustomerOrder o
+ON c.CustId = o.CustomerId
+JOIN OrderItem i
+ON o.OrderId = i.OrderId
+GROUP BY c.Country, c.city
+ORDER BY c.Country
+
+
+/*We have 64 rows in this result-set of countries orders.  There are multiples of 
+each country due to many cities within each country in this database.*/
